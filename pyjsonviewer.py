@@ -7,14 +7,13 @@ author: Atsushi Sakai (@Atsushi_twi)
 
 """
 
-
 import os
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import filedialog
 
 
-class PathTreeFrame(ttk.Frame):
+class JSONTreeFrame(ttk.Frame):
 
     def __init__(self, master, path=os.curdir):
         """初期化
@@ -115,18 +114,33 @@ class PathTreeFrame(ttk.Frame):
             self.root_path = dir_name
             self.create_widgets()
 
+    def select_json_file(self, event=None):
+        print("Json file select")
+        file_path = filedialog.askopenfilename(initialdir = "~/", filetypes = [("JSON files","*.json")])
+        print(file_path)
+
+
+
 
 def main():
     print(__file__ + " start!!")
 
     root = tk.Tk()
     root.title('PyJSONViewer')
-    app = PathTreeFrame(root)
+    root.geometry("500x500")
+    menubar = tk.Menu(root)
+    app = JSONTreeFrame(root)
+
+    filemenu = tk.Menu(menubar, tearoff=0)
+    filemenu.add_command(label="Open", command=app.select_json_file)
+    menubar.add_cascade(label="File", menu=filemenu)
     app.grid(column=0, row=0, sticky=(tk.N, tk.S, tk.E, tk.W))
     root.bind('<F4>', app.change_dir)
     root.bind('<F5>', app.update_dir)
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)
+
+    root.config(menu=menubar)
     root.mainloop()
 
 
