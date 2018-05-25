@@ -11,6 +11,7 @@ import os
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import filedialog
+import json
 
 
 class JSONTreeFrame(ttk.Frame):
@@ -30,13 +31,13 @@ class JSONTreeFrame(ttk.Frame):
 
     def create_widgets(self):
         """ウィジェットの作成"""
-        # ツリービューの作成とスクロール設定
         self.tree = ttk.Treeview(self)
+
+        # configure scroll
         ysb = ttk.Scrollbar(
             self, orient=tk.VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=ysb.set)
 
-        # レイアウト。スクロールバーは拡大させない
         self.tree.grid(row=0, column=0, sticky=(tk.N, tk.S, tk.E, tk.W))
         ysb.grid(row=0, column=1, sticky=(tk.N, tk.S))
         self.columnconfigure(0, weight=1)
@@ -44,12 +45,12 @@ class JSONTreeFrame(ttk.Frame):
 
         # ディレクトリを開いた際と、ダブルクリック(ファイル選択)を関連付け
         self.tree.bind('<<TreeviewOpen>>', self.open_node)
-        self.tree.bind('<Double-1>', self.choose_file)
+        #  self.tree.bind('<Double-1>', self.choose_file)
 
         # ルートのパスを挿入
-        self.insert_node('', self.root_path, self.root_path)
+        #  self.insert_node('', self.root_path, self.root_path)
 
-    def insert_node(self, parent, text, abspath):
+    def insert_node(self, parent, text):
         """Treeviewにノードを追加する
 
         args:
@@ -61,12 +62,13 @@ class JSONTreeFrame(ttk.Frame):
         # まずノードを追加する
         node = self.tree.insert(parent, 'end', text=text, open=False)
 
+        self.nodes[node] = (False)
         # ディレクトリならば、空の子要素を追加し開けるようにしておく
-        if os.path.isdir(abspath):
-            self.tree.insert(node, 'end')
-            self.nodes[node] = (False, abspath)
-        else:
-            self.nodes[node] = (True, abspath)
+        #  if os.path.isdir(abspath):
+        #  self.tree.insert(node, 'end')
+        #  self.nodes[node] = (False, abspath)
+        #  else:
+        #  self.nodes[node] = (True, abspath)
 
     def open_node(self, event):
         """ディレクトリを開いた際に呼び出される
@@ -116,10 +118,26 @@ class JSONTreeFrame(ttk.Frame):
 
     def select_json_file(self, event=None):
         print("Json file select")
-        file_path = filedialog.askopenfilename(initialdir = "~/", filetypes = [("JSON files","*.json")])
-        print(file_path)
+        file_path = filedialog.askopenfilename(
+            initialdir="~/", filetypes=[("JSON files", "*.json")])
+        self.importjson(file_path)
 
+    def importjson(self, file_path):
+        #  print(file_path)
+        f = open(file_path)
+        data = json.load(f)
+        f.close()
+        #  print(json.dumps(data, sort_keys=True, indent=4))
 
+        self.insert_nodes(data)
+
+    def insert_nodes(self, data):
+
+        parent = ""
+
+        for d in data:
+            self.insert_node(parent, d)
+            print(d)
 
 
 def main():
