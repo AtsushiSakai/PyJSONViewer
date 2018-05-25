@@ -17,8 +17,6 @@ class JSONTreeFrame(ttk.Frame):
 
     def __init__(self, master, path=os.curdir):
         super().__init__(master)
-        self.root_path = os.path.abspath(path)
-        self.nodes = {}
         self.create_widgets()
 
     def create_widgets(self):
@@ -43,7 +41,6 @@ class JSONTreeFrame(ttk.Frame):
                 self.insert_node(node, key, value)
 
     def select_json_file(self, event=None):
-        #  print("Json file select")
         file_path = filedialog.askopenfilename(
             initialdir="~/", filetypes=[("JSON files", "*.json")])
         self.importjson(file_path)
@@ -52,7 +49,13 @@ class JSONTreeFrame(ttk.Frame):
         f = open(file_path)
         data = json.load(f)
         f.close()
+
+        self.delte_all_nodes()
         self.insert_nodes(data)
+
+    def delte_all_nodes(self):
+        for i in self.tree.get_children():
+            self.tree.delete(i)
 
     def insert_nodes(self, data):
         parent = ""
