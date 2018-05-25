@@ -6,18 +6,21 @@ author: Atsushi Sakai (@Atsushi_twi)
 
 """
 
-import os
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import filedialog
 import json
+import argparse
 
 
 class JSONTreeFrame(ttk.Frame):
 
-    def __init__(self, master, path=os.curdir):
+    def __init__(self, master, jsonpath=None):
         super().__init__(master)
         self.create_widgets()
+
+        if jsonpath:
+            self.importjson(jsonpath)
 
     def create_widgets(self):
         self.tree = ttk.Treeview(self)
@@ -40,9 +43,9 @@ class JSONTreeFrame(ttk.Frame):
             for (key, value) in value.items():
                 self.insert_node(node, key, value)
 
-    def select_json_file(self, event=None):
+    def select_json_file(self, initialdir="~/"):
         file_path = filedialog.askopenfilename(
-            initialdir="~/", filetypes=[("JSON files", "*.json")])
+            initialdir=initialdir, filetypes=[("JSON files", "*.json")])
         self.importjson(file_path)
 
     def importjson(self, file_path):
@@ -67,11 +70,15 @@ class JSONTreeFrame(ttk.Frame):
 def main():
     print(__file__ + " start!!")
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', '--file', type=str, help='JSON file path')
+    args = parser.parse_args()
+
     root = tk.Tk()
     root.title('PyJSONViewer')
     root.geometry("500x500")
     menubar = tk.Menu(root)
-    app = JSONTreeFrame(root)
+    app = JSONTreeFrame(root, jsonpath=args.file)
 
     filemenu = tk.Menu(menubar, tearoff=0)
     filemenu.add_command(label="Open", command=app.select_json_file)

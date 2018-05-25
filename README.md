@@ -13,9 +13,9 @@ Features:
 
 1. Minimum dependency. 
 
-2. Easy to use.
+2. Multi-platform (Mac, Windows, Linux).
 
-3. One file code.
+3. Easy to use.
 
 
 # Requirements
@@ -29,6 +29,14 @@ Features:
 2. Clone or download as zip this repository. 
 
 # How to use
+
+## Selct JSON file with CUI.
+
+1. Run pyjsonviewer.py with -f option and the path to a JSON file:
+
+> python pyjsonviewer.py -f pathtojsonfile/sample.json
+
+2. JSON data tree will be shown.
 
 ## Select JSON file with GUI.
 
