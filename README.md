@@ -22,7 +22,21 @@ Features:
 
 - Python 3.6.x
 
+# Download
+
+1. Install python 3.6.x.
+
+2. Clone or download as zip this repository. 
+
 # How to use
+
+## Select JSON file with GUI.
+
+1. Run pyjsonviewer.py
+
+2. File-\>Open and then select json file.
+
+3. JSON data tree will be shown.
 
 # License 
 
