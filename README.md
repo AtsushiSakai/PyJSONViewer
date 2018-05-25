@@ -5,11 +5,13 @@ A JSON viewer using pure python
 
 # What is this?
 
-This is a JSON viewer only using pure python.
+This is a JSON file data viewer based on python.
 
-Feature:
+It only uses build-in libraries of python (tkinter, json).
 
-1. Minimum dependency. It only uses build-in libs of python (tkinter, json).
+Features:
+
+1. Minimum dependency. 
 
 2. Easy to use.
 
