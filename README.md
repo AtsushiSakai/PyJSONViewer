@@ -1,5 +1,5 @@
 # PyJSONViewer
-A JSON viewer using pure python
+A JSON file data viewer using pure python
 
 - On Mac OS
 
