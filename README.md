@@ -36,7 +36,7 @@ Features:
 
 1. Run pyjsonviewer.py with -f option and the path to a JSON file:
 
-> python pyjsonviewer.py -f path\_to\_json\_file/sample.json
+> $ python pyjsonviewer.py -f path\_to\_json\_file/sample.json
 
 2. JSON data tree will be shown.
 
@@ -50,7 +50,7 @@ Features:
 
 You can set initial directory with CUI:
 
-> python pyjsonviewer.py -d path\_to\_json\_file\_dir
+> $ python pyjsonviewer.py -d path\_to\_json\_file\_dir
 
 # License 
 
