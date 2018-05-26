@@ -1,6 +1,8 @@
 # PyJSONViewer
 A JSON viewer using pure python
 
+- On Mac OS
+
 ![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/img1.png)
 
 # What is this?
@@ -34,7 +36,7 @@ Features:
 
 1. Run pyjsonviewer.py with -f option and the path to a JSON file:
 
-> python pyjsonviewer.py -f pathtojsonfile/sample.json
+> python pyjsonviewer.py -f path\_to\_json\_file/sample.json
 
 2. JSON data tree will be shown.
 
@@ -45,6 +47,10 @@ Features:
 2. File-\>Open and then select json file.
 
 3. JSON data tree will be shown.
+
+You can set initial directory with CUI:
+
+> python pyjsonviewer.py -d path\_to\_json\_file\_dir
 
 # License 
 

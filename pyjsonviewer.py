@@ -11,13 +11,15 @@ import tkinter.ttk as ttk
 from tkinter import filedialog
 import json
 import argparse
+from tkinter import messagebox
 
 
 class JSONTreeFrame(ttk.Frame):
 
-    def __init__(self, master, jsonpath=None):
+    def __init__(self, master, jsonpath=None, initialdir="~/"):
         super().__init__(master)
         self.create_widgets()
+        self.initialdir = initialdir
 
         if jsonpath:
             self.importjson(jsonpath)
@@ -43,9 +45,9 @@ class JSONTreeFrame(ttk.Frame):
             for (key, value) in value.items():
                 self.insert_node(node, key, value)
 
-    def select_json_file(self, initialdir="~/"):
+    def select_json_file(self):
         file_path = filedialog.askopenfilename(
-            initialdir=initialdir, filetypes=[("JSON files", "*.json")])
+            initialdir=self.initialdir, filetypes=[("JSON files", "*.json")])
         self.importjson(file_path)
 
     def importjson(self, file_path):
@@ -66,23 +68,35 @@ class JSONTreeFrame(ttk.Frame):
         for (key, value) in data.items():
             self.insert_node(parent, key, value)
 
+    def showinfo(self):
+        msg = """
+        PyJSONViewer
+        by Atsushi Sakai(@Atsushi_twi)
+        Ver.1.0
+        """
+        messagebox.showinfo("About", msg)
+
 
 def main():
     print(__file__ + " start!!")
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--file', type=str, help='JSON file path')
+    parser.add_argument('-d', '--dir', type=str, help='JSON file directory')
     args = parser.parse_args()
 
     root = tk.Tk()
     root.title('PyJSONViewer')
     root.geometry("500x500")
     menubar = tk.Menu(root)
-    app = JSONTreeFrame(root, jsonpath=args.file)
+    app = JSONTreeFrame(root, jsonpath=args.file, initialdir=args.dir)
 
     filemenu = tk.Menu(menubar, tearoff=0)
     filemenu.add_command(label="Open", command=app.select_json_file)
     menubar.add_cascade(label="File", menu=filemenu)
+    helpmenu = tk.Menu(menubar, tearoff=0)
+    helpmenu.add_command(label="About", command=app.showinfo)
+    menubar.add_cascade(label="Help", menu=helpmenu)
     app.grid(column=0, row=0, sticky=(tk.N, tk.S, tk.E, tk.W))
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)
