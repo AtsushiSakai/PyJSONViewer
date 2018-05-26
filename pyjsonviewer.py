@@ -73,6 +73,7 @@ class JSONTreeFrame(ttk.Frame):
         PyJSONViewer
         by Atsushi Sakai(@Atsushi_twi)
         Ver.1.0
+        GitHub:https://github.com/AtsushiSakai/PyJSONViewer
         """
         messagebox.showinfo("About", msg)
 
