@@ -13,6 +13,7 @@ import json
 import argparse
 from tkinter import messagebox
 
+MAX_N_ITEM = 20
 
 class JSONTreeFrame(ttk.Frame):
 
@@ -41,10 +42,8 @@ class JSONTreeFrame(ttk.Frame):
 
         if type(value) is not dict:
             if type(value) is list:
-                for v in value:
-                    inode = self.tree.insert(node, 'end', text=v, open=False)
-            else:
-                node = self.tree.insert(node, 'end', text=value, open=False)
+                value = value[0:MAX_N_ITEM]
+            node = self.tree.insert(node, 'end', text=value, open=False)
         else:
             for (key, value) in value.items():
                 self.insert_node(node, key, value)
