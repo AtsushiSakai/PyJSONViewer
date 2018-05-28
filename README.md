@@ -1,9 +1,13 @@
 # PyJSONViewer
 A JSON file data viewer using pure python
 
-- On Mac OS
+- Mac OS
 
-![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/img1.png)
+![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/mac.png)
+
+- Windows10
+
+![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/windows.png)
 
 # What is this?
 
