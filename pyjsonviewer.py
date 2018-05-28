@@ -40,7 +40,11 @@ class JSONTreeFrame(ttk.Frame):
         node = self.tree.insert(parent, 'end', text=key, open=False)
 
         if type(value) is not dict:
-            node = self.tree.insert(node, 'end', text=value, open=False)
+            if type(value) is list:
+                for v in value:
+                    inode = self.tree.insert(node, 'end', text=v, open=False)
+            else:
+                node = self.tree.insert(node, 'end', text=value, open=False)
         else:
             for (key, value) in value.items():
                 self.insert_node(node, key, value)
