@@ -15,6 +15,7 @@ from tkinter import messagebox
 
 MAX_N_ITEM = 20
 
+
 class JSONTreeFrame(ttk.Frame):
 
     def __init__(self, master, jsonpath=None, initialdir="~/"):
@@ -39,6 +40,9 @@ class JSONTreeFrame(ttk.Frame):
 
     def insert_node(self, parent, key, value):
         node = self.tree.insert(parent, 'end', text=key, open=False)
+
+        if value is None:
+            return
 
         if type(value) is not dict:
             if type(value) is list:
@@ -87,12 +91,20 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--file', type=str, help='JSON file path')
     parser.add_argument('-d', '--dir', type=str, help='JSON file directory')
+    parser.add_argument('-o', '--open', action='store_true',
+                        default=False, help='Open with finder')
     args = parser.parse_args()
 
     root = tk.Tk()
     root.title('PyJSONViewer')
     root.geometry("500x500")
     menubar = tk.Menu(root)
+
+    if args.open:
+        args.file = filedialog.askopenfilename(
+            initialdir=args.dir,
+            filetypes=[("JSON files", "*.json")])
+
     app = JSONTreeFrame(root, jsonpath=args.file, initialdir=args.dir)
 
     filemenu = tk.Menu(menubar, tearoff=0)
