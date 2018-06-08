@@ -56,6 +56,16 @@ You can set initial directory with CUI:
 
 > $ python pyjsonviewer.py -d path\_to\_json\_file\_dir
 
+## Select JSON file with drag and drop.
+
+1. Run pyjsonviewer.py with the option -o
+
+> $ python pyjsonviewer.py -o path\_to\_json\_file\_dir
+
+2. File browser is shown.
+
+3. You can drag and drop a JSON file to the file browser.
+
 # License 
 
 MIT
