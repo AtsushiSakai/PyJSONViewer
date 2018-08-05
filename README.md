@@ -26,15 +26,25 @@ Features:
 
 # Requirements
 
-- Python 3.6.x
+- Python 3.6.x or higher
 
 # Download
 
-1. Install python 3.6.x.
+>$ pip install PyJSONViewer
 
-2. Clone or download as zip this repository. 
+or download as zip.
+
+- [PyJSONViewer · PyPI](https://pypi.org/project/PyJSONViewer/)
 
 # How to use
+
+## alias setting
+
+If you add this alias settting in your .bashrc
+
+> alias pyjsonviewer='python -c "from pyjsonviewer import pyjsonviewer;pyjsonviewer.main()"'
+
+You can use this tool with just type "pyjsonviewer" in your bash.
 
 ## Selct JSON file with CUI.
 
