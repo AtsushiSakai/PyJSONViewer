@@ -42,7 +42,7 @@ or download as zip.
 
 If you add this alias settting in your .bashrc
 
-> alias pyjsonviewer='python -c "from pyjsonviewer import pyjsonviewer;pyjsonviewer.main()"'
+> alias pyjsonviewer='python -m pyjsonviewer'
 
 You can use this tool with just type "pyjsonviewer" in your bash.
 
