@@ -9,6 +9,12 @@ A JSON file data viewer using pure python
 
 ![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/windows.png)
 
+- CentOS
+
+![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/centos.png)
+
+
+
 # What is this?
 
 This is a JSON file data viewer based on python.
