@@ -13,7 +13,7 @@ import json
 import argparse
 from tkinter import messagebox
 
-MAX_N_ITEM = 20
+MAX_N_ITEM = 300
 
 class JSONTreeFrame(ttk.Frame):
 
