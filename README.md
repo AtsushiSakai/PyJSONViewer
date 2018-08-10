@@ -11,7 +11,7 @@ A JSON file data viewer using pure python
 
 - CentOS
 
-![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/centos.png)
+![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/centos.PNG)
 
 
 
