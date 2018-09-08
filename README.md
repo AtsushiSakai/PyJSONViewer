@@ -84,7 +84,7 @@ You can set initial directory with CUI:
 
 ## Vimrc setting
 
-If you are a vimuser, you can set this command in your vimrc.
+If you are a vim user, you can set this command in your vimrc.
 
 	"JSON format
 	function! JsonFormat()
@@ -100,6 +100,17 @@ If you are a vimuser, you can set this command in your vimrc.
 		\   ["/bin/sh", "-c", "python -m pyjsonviewer -f".filename],{})
 	endfunction
 	command! JsonViewer :call JsonViewer()
+
+When you are editing a json file with vim,
+
+you can open it using PyJSONViewer with
+
+>: JSONViewer()
+
+ 
+You can also format json file with
+
+>: JSONFormat
 
 # License 
 
