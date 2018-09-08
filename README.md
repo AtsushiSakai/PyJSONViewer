@@ -44,7 +44,7 @@ or download as zip.
 
 # How to use
 
-## alias setting
+## Bash alias setting
 
 If you add this alias settting in your .bashrc
 
@@ -81,6 +81,25 @@ You can set initial directory with CUI:
 2. File browser is shown.
 
 3. You can drag and drop a JSON file to the file browser.
+
+## Vimrc setting
+
+If you are a vimuser, you can set this command in your vimrc.
+
+	"JSON format
+	function! JsonFormat()
+		%!python -m json.tool
+	endfunction
+	command! JsonFormat :call JsonFormat()
+
+	"JSON viewer
+	function! JsonViewer()
+		"%!python -m pyjsonviewer -f % > /dev/null
+  		let filename = expand('%')
+		let s:job = job_start(
+		\   ["/bin/sh", "-c", "python -m pyjsonviewer -f".filename],{})
+	endfunction
+	command! JsonViewer :call JsonViewer()
 
 # License 
 
