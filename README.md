@@ -107,10 +107,9 @@ you can open it using PyJSONViewer with
 
 >: JSONViewer()
 
- 
 You can also format json file with
 
->: JSONFormat
+>: JSONFormat()
 
 # License 
 
