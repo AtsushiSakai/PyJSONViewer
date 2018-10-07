@@ -62,7 +62,7 @@ You can use this tool with just type "pyjsonviewer" in your bash.
 
 ## Select JSON file with GUI.
 
-1. Run pyjsonviewer.py
+1. Run pyjsonviewer
 
 2. File-\>Open and then select json file.
 
@@ -71,6 +71,17 @@ You can use this tool with just type "pyjsonviewer" in your bash.
 You can set initial directory with CUI:
 
 > $ python pyjsonviewer.py -d path\_to\_json\_file\_dir
+
+## Select JSON file from history.
+
+1. Run pyjsonviewer.py
+
+2. File-\>"Open from history" and then double click a json file from the list.
+
+![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/history.png)
+
+3. JSON data tree will be shown.
+
 
 ## Select JSON file with drag and drop.
 
@@ -118,7 +129,5 @@ MIT
 # Author
 
 - [Atsushi Sakai](https://github.com/AtsushiSakai/) ([@Atsushi_twi](https://twitter.com/Atsushi_twi))
-
-
 
 
