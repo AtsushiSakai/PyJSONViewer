@@ -10,10 +10,13 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import filedialog
 import json
+import os
 import argparse
 from tkinter import messagebox
 
 MAX_N_ITEM = 300
+
+HISTORY_FILE_PATH = os.path.expanduser('~') + "/.pyjsonviewer_history"
 
 
 class JSONTreeFrame(ttk.Frame):
@@ -57,15 +60,35 @@ class JSONTreeFrame(ttk.Frame):
             initialdir=self.initialdir, filetypes=[("JSON files", "*.json")])
         self.importjson(file_path)
 
-    def importjson(self, file_path):
-        f = open(file_path)
-        data = json.load(f)
-        f.close()
+    def select_json_file_from_history(self):
+        print("select_json_file_from_history")
 
-        self.delte_all_nodes()
+        # Lb1 = tk.Listbox(self)
+        # Lb1.insert(1, "Python")
+        # Lb1.insert(2, "Perl")
+        # Lb1.insert(3, "C")
+        # Lb1.insert(4, "PHP")
+        # Lb1.insert(5, "JSP")
+        # Lb1.insert(6, "Ruby")
+        # Lb1.pack()
+        # self.importjson(file_path)
+
+    def save_json_history(self, file_path):
+        with open(HISTORY_FILE_PATH, "a") as f:
+            f.write(file_path + '\n')
+
+    def load_json_data(self, file_path):
+        with open(file_path) as f:
+            return json.load(f)
+
+    def importjson(self, file_path):
+
+        data = self.load_json_data(file_path)
+        self.save_json_history(file_path)
+        self.delete_all_nodes()
         self.insert_nodes(data)
 
-    def delte_all_nodes(self):
+    def delete_all_nodes(self):
         for i in self.tree.get_children():
             self.tree.delete(i)
 
@@ -109,6 +132,8 @@ def main():
 
     filemenu = tk.Menu(menubar, tearoff=0)
     filemenu.add_command(label="Open", command=app.select_json_file)
+    filemenu.add_command(label="Open from History",
+                         command=app.select_json_file_from_history)
     menubar.add_cascade(label="File", menu=filemenu)
     helpmenu = tk.Menu(menubar, tearoff=0)
     helpmenu.add_command(label="About", command=app.showinfo)
