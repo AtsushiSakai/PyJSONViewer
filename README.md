@@ -50,13 +50,13 @@ If you add this alias settting in your .bashrc
 
 > alias pyjsonviewer='python -m pyjsonviewer'
 
-You can use this tool with just type "pyjsonviewer" in your bash.
+you can use this tool with just typing "pyjsonviewer" in your bash.
 
 ## Selct JSON file with CUI.
 
-1. Run pyjsonviewer.py with -f option and the path to a JSON file:
+1. Run pyjsonviewer with -f option and the path to a JSON file:
 
-> $ python pyjsonviewer.py -f path\_to\_json\_file/sample.json
+> $ pyjsonviewer -f path\_to\_json\_file/sample.json
 
 2. JSON data tree will be shown.
 
@@ -64,19 +64,21 @@ You can use this tool with just type "pyjsonviewer" in your bash.
 
 1. Run pyjsonviewer
 
+> $ pyjsonviewer
+
 2. File-\>Open and then select json file.
 
 3. JSON data tree will be shown.
 
-You can set initial directory with CUI:
+You can set initial directory:
 
-> $ python pyjsonviewer.py -d path\_to\_json\_file\_dir
+> $ pyjsonviewer -d path\_to\_json\_file\_dir
 
 ## Select JSON file from history.
 
 1. Run pyjsonviewer.py
 
-2. File-\>"Open from history" and then double click a json file from the list.
+2. File-\>"Open from history" and then double click a json file path from the list.
 
 ![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/history.png)
 
