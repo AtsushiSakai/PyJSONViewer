@@ -1,3 +1,13 @@
+"""
+
+
+How to upload new release
+
+1. change version in setup.py
+
+2. python setup.py sdist upload
+
+"""
 from setuptools import setup, find_packages
 
 # read README
