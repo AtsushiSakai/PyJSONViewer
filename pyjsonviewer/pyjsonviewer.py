@@ -13,10 +13,12 @@ import json
 import os
 import argparse
 from tkinter import messagebox
+from tkinter import font
 
-MAX_N_ITEM = 300
-
+# === Config ===
+MAX_N_SHOW_ITEM = 300
 HISTORY_FILE_PATH = os.path.expanduser('~') + "/.pyjsonviewer_history"
+MAX_HISTORY = 10
 
 
 class JSONTreeFrame(ttk.Frame):
@@ -49,7 +51,7 @@ class JSONTreeFrame(ttk.Frame):
 
         if type(value) is not dict:
             if type(value) is list:
-                value = value[0:MAX_N_ITEM]
+                value = value[0:MAX_N_SHOW_ITEM]
             node = self.tree.insert(node, 'end', text=value, open=False)
         else:
             for (key, value) in value.items():
@@ -64,34 +66,45 @@ class JSONTreeFrame(ttk.Frame):
         seen = []
         return [x for x in seq if x not in seen and not seen.append(x)]
 
-    def onselect(self, evt):
+    def select_listbox_item(self, evt):
         w = evt.widget
         index = int(w.curselection()[0])
         value = w.get(index)
-        print('You selected item %d: "%s"' % (index, value))
         self.importjson(value)
         self.sub_win.destroy()  # close window
 
     def select_json_file_from_history(self):
         self.sub_win = tk.Toplevel()
-        lb = tk.Listbox(self.sub_win, width=100)
+        lb = Listbox(self.sub_win)
         with open(HISTORY_FILE_PATH) as f:
             lines = self.get_unique_list(reversed(f.readlines()))
             for ln, line in enumerate(lines):
                 lb.insert(ln, line.replace("\n", ""))
-        lb.bind('<Double-1>', self.onselect)
+        lb.bind('<Double-1>', self.select_listbox_item)
+        maximum_width = 250
+        lb.autowidth(maximum_width)
         lb.pack()
 
     def save_json_history(self, file_path):
-        with open(HISTORY_FILE_PATH, "a") as f:
-            f.write(file_path + '\n')
+        lines = []
+        try:
+            with open(HISTORY_FILE_PATH, "r") as f:
+                lines = self.get_unique_list(f.readlines())
+        except FileNotFoundError:
+            print("created:" + HISTORY_FILE_PATH)
+
+        lines.append(file_path)
+
+        with open(HISTORY_FILE_PATH, "w") as f:
+            lines = lines[max(0, len(lines) - MAX_HISTORY):]
+            for line in lines:
+                f.write(line.replace("\n", "") + "\n")
 
     def load_json_data(self, file_path):
         with open(file_path) as f:
             return json.load(f)
 
     def importjson(self, file_path):
-
         data = self.load_json_data(file_path)
         self.save_json_history(file_path)
         self.delete_all_nodes()
@@ -111,10 +124,29 @@ class JSONTreeFrame(ttk.Frame):
         msg = """
         PyJSONViewer
         by Atsushi Sakai(@Atsushi_twi)
-        Ver.1.0
+        Ver. 1.1
         GitHub:https://github.com/AtsushiSakai/PyJSONViewer
         """
         messagebox.showinfo("About", msg)
+
+
+class Listbox(tk.Listbox):
+    """
+        auto width list box container
+    """
+
+    def autowidth(self, maxwidth):
+        f = font.Font(font=self.cget("font"))
+        pixels = 0
+        for item in self.get(0, "end"):
+            pixels = max(pixels, f.measure(item))
+        # bump listbox size until all entries fit
+        pixels = pixels + 10
+        width = int(self.cget("width"))
+        for w in range(0, maxwidth + 1, 5):
+            if self.winfo_reqwidth() >= pixels:
+                break
+            self.config(width=width + w)
 
 
 def main():
