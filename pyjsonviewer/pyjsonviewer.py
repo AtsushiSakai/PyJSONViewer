@@ -60,18 +60,27 @@ class JSONTreeFrame(ttk.Frame):
             initialdir=self.initialdir, filetypes=[("JSON files", "*.json")])
         self.importjson(file_path)
 
-    def select_json_file_from_history(self):
-        print("select_json_file_from_history")
+    def get_unique_list(self, seq):
+        seen = []
+        return [x for x in seq if x not in seen and not seen.append(x)]
 
-        # Lb1 = tk.Listbox(self)
-        # Lb1.insert(1, "Python")
-        # Lb1.insert(2, "Perl")
-        # Lb1.insert(3, "C")
-        # Lb1.insert(4, "PHP")
-        # Lb1.insert(5, "JSP")
-        # Lb1.insert(6, "Ruby")
-        # Lb1.pack()
-        # self.importjson(file_path)
+    def onselect(self, evt):
+        w = evt.widget
+        index = int(w.curselection()[0])
+        value = w.get(index)
+        print('You selected item %d: "%s"' % (index, value))
+        self.importjson(value)
+        self.sub_win.destroy()  # close window
+
+    def select_json_file_from_history(self):
+        self.sub_win = tk.Toplevel()
+        lb = tk.Listbox(self.sub_win, width=100)
+        with open(HISTORY_FILE_PATH) as f:
+            lines = self.get_unique_list(reversed(f.readlines()))
+            for ln, line in enumerate(lines):
+                lb.insert(ln, line.replace("\n", ""))
+        lb.bind('<Double-1>', self.onselect)
+        lb.pack()
 
     def save_json_history(self, file_path):
         with open(HISTORY_FILE_PATH, "a") as f:
@@ -113,7 +122,8 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--file', type=str, help='JSON file path')
-    parser.add_argument('-d', '--dir', type=str, help='JSON file directory')
+    parser.add_argument('-d', '--dir', type=str,
+                        help='JSON file directory')
     parser.add_argument('-o', '--open', action='store_true',
                         default=False, help='Open with finder')
     args = parser.parse_args()
