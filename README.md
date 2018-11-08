@@ -9,6 +9,10 @@ A JSON file data viewer using pure python
 
 ![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/windows.png)
 
+- Ubuntu
+
+![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/ubuntu.png)
+
 - CentOS
 
 ![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/centos.PNG)
