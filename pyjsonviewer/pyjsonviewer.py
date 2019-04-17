@@ -14,6 +14,8 @@ import os
 import argparse
 from tkinter import messagebox
 from tkinter import font
+from urllib.parse import urlparse
+import webbrowser
 
 # === Config ===
 MAX_N_SHOW_ITEM = 300
@@ -33,6 +35,7 @@ class JSONTreeFrame(ttk.Frame):
 
     def create_widgets(self):
         self.tree = ttk.Treeview(self)
+        self.tree.bind('<Double-1>', self.follow_link)
 
         ysb = ttk.Scrollbar(
             self, orient=tk.VERTICAL, command=self.tree.yview)
@@ -56,6 +59,17 @@ class JSONTreeFrame(ttk.Frame):
         else:
             for (key, value) in value.items():
                 self.insert_node(node, key, value)
+
+    def follow_link(self, event):
+        item_id = self.tree.selection()
+        item_text = self.tree.item(item_id, 'text')
+
+        if self.is_url(item_text):
+            webbrowser.open(item_text)
+
+    def is_url(self, text):
+        parsed = urlparse(text)
+        return all([parsed.scheme, parsed.netloc, parsed.path])
 
     def select_json_file(self):
         file_path = filedialog.askopenfilename(
