@@ -23,7 +23,7 @@ A JSON file data viewer using pure python
 
 This is a JSON file data viewer based on python.
 
-It only uses build-in libraries of python (tkinter, json).
+It only uses built-in libraries of python (tkinter, json).
 
 Features:
 
@@ -56,7 +56,7 @@ If you add this alias settting in your .bashrc
 
 you can use this tool with just typing "pyjsonviewer" in your bash.
 
-## Selct JSON file with CUI.
+## Select JSON file with CUI.
 
 1. Run pyjsonviewer with -f option and the path to a JSON file:
 
