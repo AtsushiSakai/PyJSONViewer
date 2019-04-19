@@ -17,6 +17,8 @@ from tkinter import font
 from urllib.parse import urlparse
 import webbrowser
 
+VERSION = "1.2.0"
+
 # === Config ===
 MAX_N_SHOW_ITEM = 300
 HISTORY_FILE_PATH = os.path.expanduser('~') + "/.pyjsonviewer_history"
@@ -138,7 +140,7 @@ class JSONTreeFrame(ttk.Frame):
         msg = """
         PyJSONViewer
         by Atsushi Sakai(@Atsushi_twi)
-        Ver. 1.1
+        Ver.""" + VERSION + """\n
         GitHub:https://github.com/AtsushiSakai/PyJSONViewer
         """
         messagebox.showinfo("About", msg)

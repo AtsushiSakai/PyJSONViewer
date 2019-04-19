@@ -13,11 +13,6 @@ A JSON file data viewer using pure python
 
 ![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/ubuntu.png)
 
-- CentOS
-
-![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/centos.PNG)
-
-
 
 # What is this?
 
@@ -127,6 +122,12 @@ you can open it using PyJSONViewer with
 You can also format json file with
 
 >: JSONFormat()
+
+# Open a link with a brower
+
+If a URL is included in a json file,
+
+you can open it with a browser with double click the URL.
 
 # License 
 

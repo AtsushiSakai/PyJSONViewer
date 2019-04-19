@@ -9,6 +9,7 @@ How to upload new release
 
 """
 from setuptools import setup, find_packages
+from pyjsonviewer import pyjsonviewer
 
 # read README
 try:
@@ -19,7 +20,7 @@ except(IOError, ImportError):
 
 setup(
     name="PyJSONViewer",
-    version="1.1.0",
+    version=version=pyjsonviewer.VERSION,
     url="https://github.com/AtsushiSakai/PyJSONViewer",
     author="Atsushi Sakai",
     author_email="asakaig@gmail.com",
