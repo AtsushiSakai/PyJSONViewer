@@ -20,7 +20,7 @@ except(IOError, ImportError):
 
 setup(
     name="PyJSONViewer",
-    version=version=pyjsonviewer.VERSION,
+    version=pyjsonviewer.VERSION,
     url="https://github.com/AtsushiSakai/PyJSONViewer",
     author="Atsushi Sakai",
     author_email="asakaig@gmail.com",
