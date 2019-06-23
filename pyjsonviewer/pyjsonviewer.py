@@ -70,6 +70,11 @@ class JSONTreeFrame(ttk.Frame):
             webbrowser.open(item_text)
 
     def is_url(self, text):
+        """check input text is url or not
+
+        :param text: input text
+        :return: url or not
+        """
         parsed = urlparse(text)
         return all([parsed.scheme, parsed.netloc, parsed.path])
 
