@@ -6,7 +6,11 @@ How to upload new release
 
 1. change version in setup.py
 
-2. python setup.py sdist upload
+2. setup twine, see:https://blog.amedama.jp/entry/2017/12/31/175036
+
+3. create zip file: python setup.py sdist
+
+4. upload twine upload --repository pypi dist/PyJSONViewer-1.3.0.tar.gz
 
 """
 from setuptools import setup, find_packages
@@ -16,7 +20,7 @@ from pyjsonviewer import pyjsonviewer
 # read README
 try:
     import pypandoc
-    readme = pypandoc.convert('README.md', 'rst')
+    readme = pypandoc.convert_file('README.md', 'rst')
 except(IOError, ImportError):
     readme = open('README.md').read()
 

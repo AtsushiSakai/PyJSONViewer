@@ -83,7 +83,6 @@ You can set initial directory:
 
 3. JSON data tree will be shown.
 
-
 ## Select JSON file with drag and drop.
 
 1. Run pyjsonviewer.py with the option -o
@@ -93,6 +92,18 @@ You can set initial directory:
 2. File browser is shown.
 
 3. You can drag and drop a JSON file to the file browser.
+
+## Menu bar function
+
+- Expand all items: Tools -> Expand all
+
+- Collapse all items: Tools -> Collapse all
+
+- Show version: Help -> About
+
+- Show github page: Help -> GitHub page
+
+- Show release note: Help -> Release note
 
 ## Vimrc setting
 
@@ -136,5 +147,4 @@ MIT
 # Author
 
 - [Atsushi Sakai](https://github.com/AtsushiSakai/) ([@Atsushi_twi](https://twitter.com/Atsushi_twi))
-
 

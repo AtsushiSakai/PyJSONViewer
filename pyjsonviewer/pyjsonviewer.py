@@ -1,3 +1,5 @@
+
+
 """
 
 A JSON viewer using pure python
@@ -17,7 +19,7 @@ from tkinter import font
 from tkinter import messagebox
 from urllib.parse import urlparse
 
-VERSION = "1.3.0"
+VERSION = "1.3.1"
 
 # === Config ===
 MAX_N_SHOW_ITEM = 300
@@ -165,7 +167,8 @@ class JSONTreeFrame(ttk.Frame):
         self.open_url("https://github.com/AtsushiSakai/PyJSONViewer")
 
     def open_release_note(self):
-        self.open_url("https://github.com/AtsushiSakai/PyJSONViewer/blob/master/release_note.md")
+        self.open_url(
+            "https://github.com/AtsushiSakai/PyJSONViewer/blob/master/release_note.md")
 
     def open_url(self, url):
         if self.is_url(url):
@@ -228,19 +231,25 @@ def main():
     app = JSONTreeFrame(root, json_path=args.file, initial_dir=args.dir)
 
     file_menu = tk.Menu(menubar, tearoff=0)
-    file_menu.add_command(label="Open", accelerator='Ctrl+O', command=app.select_json_file)
-    file_menu.add_command(label="Open from History", accelerator='Ctrl+H', command=app.select_json_file_from_history)
+    file_menu.add_command(label="Open", accelerator='Ctrl+O',
+                          command=app.select_json_file)
+    file_menu.add_command(label="Open from History", accelerator='Ctrl+H',
+                          command=app.select_json_file_from_history)
     menubar.add_cascade(label="File", menu=file_menu)
 
     tool_menu = tk.Menu(menubar, tearoff=0)
-    tool_menu.add_command(label="Expand all", accelerator='Ctrl+E', command=app.expand_all)
-    tool_menu.add_command(label="Collapse all", accelerator='Ctrl+L', command=app.collapse_all)
+    tool_menu.add_command(label="Expand all",
+                          accelerator='Ctrl+E', command=app.expand_all)
+    tool_menu.add_command(label="Collapse all",
+                          accelerator='Ctrl+L', command=app.collapse_all)
     menubar.add_cascade(label="Tools", menu=tool_menu)
 
     help_menu = tk.Menu(menubar, tearoff=0)
     help_menu.add_command(label="About", command=app.show_info_window)
-    help_menu.add_command(label="Show GitHub page", command=app.open_github_page)
-    help_menu.add_command(label="Show release note", command=app.open_release_note)
+    help_menu.add_command(label="Show GitHub page",
+                          command=app.open_github_page)
+    help_menu.add_command(label="Show release note",
+                          command=app.open_release_note)
     menubar.add_cascade(label="Help", menu=help_menu)
 
     app.grid(column=0, row=0, sticky=(tk.N, tk.S, tk.E, tk.W))
@@ -253,3 +262,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

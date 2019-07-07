@@ -1,8 +1,8 @@
 # Release note
 
-## v1.3.0
+## v1.3.0: 2019/07/07
 
-TBD
+see: https://github.com/AtsushiSakai/PyJSONViewer/issues/6
 
 ## v1.2.0
 
