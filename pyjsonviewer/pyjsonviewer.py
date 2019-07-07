@@ -1,6 +1,3 @@
-
-
-
 """
 
 A JSON viewer using pure python
@@ -223,7 +220,7 @@ def main():
     root.title('PyJSONViewer')
     root.geometry("500x500")
     root.tk.call('wm', 'iconphoto', root._w,
-                 tk.PhotoImage(file=PROJECT_DIR+'/icon.py'))
+                 tk.PhotoImage(file=PROJECT_DIR + '/icon.py'))
     menubar = tk.Menu(root)
 
     if args.open:
@@ -265,4 +262,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
