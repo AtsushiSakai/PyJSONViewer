@@ -98,6 +98,20 @@ class JSONTreeFrame(ttk.Frame):
             initialdir=self.initial_dir, filetypes=[("JSON files", "*.json")])
         self.set_table_data_from_json(file_path)
 
+    def expand_all(self):
+        for item in self.get_all_children(self.tree):
+            self.tree.item(item, open=True)
+
+    def collapse_all(self):
+        for item in self.get_all_children(self.tree):
+            self.tree.item(item, open=False)
+
+    def get_all_children(self, tree, item=""):
+        children = tree.get_children(item)
+        for child in children:
+            children += self.get_all_children(tree, child)
+        return children
+
     def select_listbox_item(self, evt):
         w = evt.widget
         index = int(w.curselection()[0])
@@ -148,6 +162,18 @@ class JSONTreeFrame(ttk.Frame):
         for (key, value) in data.items():
             self.insert_node(parent, key, value)
 
+    def open_github_page(self):
+        self.open_url("https://github.com/AtsushiSakai/PyJSONViewer")
+
+    def open_release_note(self):
+        self.open_url("https://github.com/AtsushiSakai/PyJSONViewer/blob/master/release_note.md")
+
+    def open_url(self, url):
+        if self.is_url(url):
+            webbrowser.open(url)
+        else:
+            print("Error: this is not url:", url)
+
     @staticmethod
     def is_url(text):
         """check input text is url or not
@@ -177,17 +203,6 @@ class JSONTreeFrame(ttk.Frame):
         """
         messagebox.showinfo("About", msg)
 
-    def open_github_page(self):
-        self.open_url("https://github.com/AtsushiSakai/PyJSONViewer")
-
-    def open_release_note(self):
-        self.open_url("https://github.com/AtsushiSakai/PyJSONViewer/release_note.md")
-
-    def open_url(self, url):
-        if self.is_url(url):
-            webbrowser.open(url)
-        else:
-            print("Error: this is not url:", url)
 
 def main():
     print(__file__ + " start!!")
@@ -216,11 +231,18 @@ def main():
     file_menu.add_command(label="Open", accelerator='Ctrl+O', command=app.select_json_file)
     file_menu.add_command(label="Open from History", command=app.select_json_file_from_history)
     menubar.add_cascade(label="File", menu=file_menu)
+
+    tool_menu = tk.Menu(menubar, tearoff=0)
+    tool_menu.add_command(label="Expand all", command=app.expand_all)
+    tool_menu.add_command(label="Collapse all", command=app.collapse_all)
+    menubar.add_cascade(label="Tools", menu=tool_menu)
+
     help_menu = tk.Menu(menubar, tearoff=0)
     help_menu.add_command(label="About", command=app.show_info_window)
     help_menu.add_command(label="Show GitHub page", command=app.open_github_page)
     help_menu.add_command(label="Show release note", command=app.open_release_note)
     menubar.add_cascade(label="Help", menu=help_menu)
+
     app.grid(column=0, row=0, sticky=(tk.N, tk.S, tk.E, tk.W))
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)
