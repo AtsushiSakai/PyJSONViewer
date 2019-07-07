@@ -1,5 +1,6 @@
 """
 
+Setup script for PyJSONViewer
 
 How to upload new release
 
@@ -9,6 +10,7 @@ How to upload new release
 
 """
 from setuptools import setup, find_packages
+
 from pyjsonviewer import pyjsonviewer
 
 # read README

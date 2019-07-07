@@ -17,7 +17,7 @@ from tkinter import font
 from tkinter import messagebox
 from urllib.parse import urlparse
 
-VERSION = "1.2.0"
+VERSION = "1.3.0"
 
 # === Config ===
 MAX_N_SHOW_ITEM = 300
@@ -93,6 +93,7 @@ class JSONTreeFrame(ttk.Frame):
             webbrowser.open(item_text)
 
     def select_json_file(self):
+        print("select")
         file_path = filedialog.askopenfilename(
             initialdir=self.initial_dir, filetypes=[("JSON files", "*.json")])
         self.set_table_data_from_json(file_path)
@@ -173,10 +174,20 @@ class JSONTreeFrame(ttk.Frame):
         PyJSONViewer
         by Atsushi Sakai(@Atsushi_twi)
         Ver.""" + VERSION + """\n
-        GitHub:https://github.com/AtsushiSakai/PyJSONViewer
         """
         messagebox.showinfo("About", msg)
 
+    def open_github_page(self):
+        self.open_url("https://github.com/AtsushiSakai/PyJSONViewer")
+
+    def open_release_note(self):
+        self.open_url("https://github.com/AtsushiSakai/PyJSONViewer/release_note.md")
+
+    def open_url(self, url):
+        if self.is_url(url):
+            webbrowser.open(url)
+        else:
+            print("Error: this is not url:", url)
 
 def main():
     print(__file__ + " start!!")
@@ -201,14 +212,15 @@ def main():
 
     app = JSONTreeFrame(root, json_path=args.file, initial_dir=args.dir)
 
-    filemenu = tk.Menu(menubar, tearoff=0)
-    filemenu.add_command(label="Open", command=app.select_json_file)
-    filemenu.add_command(label="Open from History",
-                         command=app.select_json_file_from_history)
-    menubar.add_cascade(label="File", menu=filemenu)
-    helpmenu = tk.Menu(menubar, tearoff=0)
-    helpmenu.add_command(label="About", command=app.show_info_window)
-    menubar.add_cascade(label="Help", menu=helpmenu)
+    file_menu = tk.Menu(menubar, tearoff=0)
+    file_menu.add_command(label="Open", accelerator='Ctrl+O', command=app.select_json_file)
+    file_menu.add_command(label="Open from History", command=app.select_json_file_from_history)
+    menubar.add_cascade(label="File", menu=file_menu)
+    help_menu = tk.Menu(menubar, tearoff=0)
+    help_menu.add_command(label="About", command=app.show_info_window)
+    help_menu.add_command(label="Show GitHub page", command=app.open_github_page)
+    help_menu.add_command(label="Show release note", command=app.open_release_note)
+    menubar.add_cascade(label="Help", menu=help_menu)
     app.grid(column=0, row=0, sticky=(tk.N, tk.S, tk.E, tk.W))
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)
