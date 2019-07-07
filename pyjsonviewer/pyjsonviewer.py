@@ -20,7 +20,7 @@ from tkinter import font
 from tkinter import messagebox
 from urllib.parse import urlparse
 
-VERSION = "1.3.0"
+VERSION = "1.3.3"
 
 # === Config ===
 MAX_N_SHOW_ITEM = 300
@@ -223,7 +223,7 @@ def main():
     root.title('PyJSONViewer')
     root.geometry("500x500")
     root.tk.call('wm', 'iconphoto', root._w,
-                 tk.PhotoImage(file=PROJECT_DIR+'/icon.png'))
+                 tk.PhotoImage(file=PROJECT_DIR+'/icon.py'))
     menubar = tk.Menu(root)
 
     if args.open:
