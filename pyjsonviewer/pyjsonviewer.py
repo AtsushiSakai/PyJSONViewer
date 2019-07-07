@@ -93,7 +93,6 @@ class JSONTreeFrame(ttk.Frame):
             webbrowser.open(item_text)
 
     def select_json_file(self):
-        print("select")
         file_path = filedialog.askopenfilename(
             initialdir=self.initial_dir, filetypes=[("JSON files", "*.json")])
         self.set_table_data_from_json(file_path)
@@ -218,6 +217,7 @@ def main():
     root = tk.Tk()
     root.title('PyJSONViewer')
     root.geometry("500x500")
+    root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file='icon.png'))
     menubar = tk.Menu(root)
 
     if args.open:
@@ -229,12 +229,12 @@ def main():
 
     file_menu = tk.Menu(menubar, tearoff=0)
     file_menu.add_command(label="Open", accelerator='Ctrl+O', command=app.select_json_file)
-    file_menu.add_command(label="Open from History", command=app.select_json_file_from_history)
+    file_menu.add_command(label="Open from History", accelerator='Ctrl+H', command=app.select_json_file_from_history)
     menubar.add_cascade(label="File", menu=file_menu)
 
     tool_menu = tk.Menu(menubar, tearoff=0)
-    tool_menu.add_command(label="Expand all", command=app.expand_all)
-    tool_menu.add_command(label="Collapse all", command=app.collapse_all)
+    tool_menu.add_command(label="Expand all", accelerator='Ctrl+E', command=app.expand_all)
+    tool_menu.add_command(label="Collapse all", accelerator='Ctrl+L', command=app.collapse_all)
     menubar.add_cascade(label="Tools", menu=tool_menu)
 
     help_menu = tk.Menu(menubar, tearoff=0)
