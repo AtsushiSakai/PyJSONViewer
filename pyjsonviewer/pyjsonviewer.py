@@ -1,5 +1,6 @@
 
 
+
 """
 
 A JSON viewer using pure python
@@ -19,12 +20,13 @@ from tkinter import font
 from tkinter import messagebox
 from urllib.parse import urlparse
 
-VERSION = "1.3.1"
+VERSION = "1.3.0"
 
 # === Config ===
 MAX_N_SHOW_ITEM = 300
 HISTORY_FILE_PATH = os.path.expanduser('~') + "/.pyjsonviewer_history"
 MAX_HISTORY = 10
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class JSONTreeFrame(ttk.Frame):
@@ -220,7 +222,8 @@ def main():
     root = tk.Tk()
     root.title('PyJSONViewer')
     root.geometry("500x500")
-    root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file='icon.png'))
+    root.tk.call('wm', 'iconphoto', root._w,
+                 tk.PhotoImage(file=PROJECT_DIR+'/icon.png'))
     menubar = tk.Menu(root)
 
     if args.open:
