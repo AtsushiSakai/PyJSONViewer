@@ -1,7 +1,7 @@
+<img src="https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/icon.png" align="right" width="200"/>
+
 # PyJSONViewer
 A JSON file data viewer using pure python
-
-![img1](https://github.com/AtsushiSakai/PyJSONViewer/raw/master/img/icon.png?s=100)
 
 # Gallery
 
