@@ -137,7 +137,7 @@ class JSONTreeFrame(ttk.Frame):
         self.collapse_all()
         for item_id in self.get_all_children(self.tree):
             item_text = self.tree.item(item_id, 'text')
-            if search_text in item_text:
+            if search_text.lower() in item_text.lower():
                 self.tree.see(item_id)
 
     def get_all_children(self, tree, item=""):
@@ -252,7 +252,7 @@ def main():
     root: Tk = tk.Tk()
     root.title('PyJSONViewer')
     root.geometry("500x500")
-    root.tk.call('wm', 'iconphoto', root._w,
+    root.tk.call('wm', 'iconphoto', root.w,
                  tk.PhotoImage(file=PROJECT_DIR + '/icon.py'))
     menubar = tk.Menu(root)
 
