@@ -1,3 +1,4 @@
+
 ## 1.3.0 (July 14, 2019)
   see: https://github.com/AtsushiSakai/PyJSONViewer/issues/6
   
