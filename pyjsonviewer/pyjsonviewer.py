@@ -17,7 +17,7 @@ from tkinter import font
 from tkinter import messagebox
 from urllib.parse import urlparse
 
-VERSION = "1.4.0"
+VERSION = open(os.path.dirname(os.path.abspath(__file__))+"/../VERSION", "r").readline()
 
 # === Config ===
 MAX_N_SHOW_ITEM = 300
