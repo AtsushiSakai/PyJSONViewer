@@ -1,3 +1,8 @@
+## 1.4.0 (August 11, 2019)
+  - implement search function.
+  - release_note.md to CHANGELOG.md
+  - add bump-version.sh
+
 
 ## 1.3.0 (July 14, 2019)
   see: https://github.com/AtsushiSakai/PyJSONViewer/issues/6
