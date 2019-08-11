@@ -12,12 +12,12 @@ import os
 import tkinter as tk
 import tkinter.ttk as ttk
 import webbrowser
-from tkinter import filedialog
+from tkinter import filedialog, Tk
 from tkinter import font
 from tkinter import messagebox
 from urllib.parse import urlparse
 
-VERSION = "1.3.3"
+VERSION = "1.4.0"
 
 # === Config ===
 MAX_N_SHOW_ITEM = 300
@@ -47,10 +47,15 @@ class JSONTreeFrame(ttk.Frame):
 
     def __init__(self, master, json_path=None, initial_dir="~/"):
         super().__init__(master)
+        self.master = master
         self.tree = ttk.Treeview(self)
         self.create_widgets()
         self.sub_win = None
         self.initial_dir = initial_dir
+        self.search_box = None
+        self.bottom_frame = None
+        self.search_box = None
+        self.search_label = None
 
         if json_path:
             self.set_table_data_from_json(json_path)
@@ -66,6 +71,17 @@ class JSONTreeFrame(ttk.Frame):
         ysb.grid(row=0, column=1, sticky=(tk.N, tk.S))
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
+
+    def init_search_box(self):
+        self.bottom_frame = tk.Frame(self)
+        self.bottom_frame.grid(column=0, row=1, sticky=(tk.N, tk.S, tk.E, tk.W))
+
+        self.search_label = tk.Label(self.bottom_frame, text="Search:")
+        self.search_label.pack(side=tk.LEFT)
+
+        self.search_box = tk.Entry(self.bottom_frame)
+        self.search_box.pack(fill='x')
+        self.search_box.bind('<Key>', self.find_word)
 
     def insert_node(self, parent, key, value):
         node = self.tree.insert(parent, 'end', text=key, open=False)
@@ -105,6 +121,24 @@ class JSONTreeFrame(ttk.Frame):
     def collapse_all(self):
         for item in self.get_all_children(self.tree):
             self.tree.item(item, open=False)
+
+    def find_window(self):
+        self.search_box = tk.Entry(self.master)
+        self.search_box.pack()
+        self.search_box.bind('<Key>', self.find_word)
+
+    def find_word(self, _):
+        search_text = self.search_box.get()
+        self.find(search_text)
+
+    def find(self, search_text):
+        if not search_text:
+            return
+        self.collapse_all()
+        for item_id in self.get_all_children(self.tree):
+            item_text = self.tree.item(item_id, 'text')
+            if search_text.lower() in item_text.lower():
+                self.tree.see(item_id)
 
     def get_all_children(self, tree, item=""):
         children = tree.get_children(item)
@@ -158,7 +192,6 @@ class JSONTreeFrame(ttk.Frame):
 
     def insert_nodes(self, data):
         parent = ""
-
         for (key, value) in data.items():
             self.insert_node(parent, key, value)
 
@@ -167,7 +200,7 @@ class JSONTreeFrame(ttk.Frame):
 
     def open_release_note(self):
         self.open_url(
-            "https://github.com/AtsushiSakai/PyJSONViewer/blob/master/release_note.md")
+            "https://github.com/AtsushiSakai/PyJSONViewer/blob/master/CHANGELOG.md")
 
     def open_url(self, url):
         if self.is_url(url):
@@ -216,10 +249,10 @@ def main():
                         default=False, help='Open with finder')
     args = parser.parse_args()
 
-    root = tk.Tk()
+    root: Tk = tk.Tk()
     root.title('PyJSONViewer')
     root.geometry("500x500")
-    root.tk.call('wm', 'iconphoto', root._w,
+    root.tk.call('wm', 'iconphoto', root.w,
                  tk.PhotoImage(file=PROJECT_DIR + '/icon.py'))
     menubar = tk.Menu(root)
 
@@ -255,6 +288,8 @@ def main():
     app.grid(column=0, row=0, sticky=(tk.N, tk.S, tk.E, tk.W))
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)
+
+    app.init_search_box()
 
     root.config(menu=menubar)
     root.mainloop()
