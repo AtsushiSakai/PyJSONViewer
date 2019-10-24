@@ -252,7 +252,7 @@ def main():
     root: Tk = tk.Tk()
     root.title('PyJSONViewer')
     root.geometry("500x500")
-    root.tk.call('wm', 'iconphoto', root.w,
+    root.tk.call('wm', 'iconphoto', root._w,
                  tk.PhotoImage(file=PROJECT_DIR + '/icon.py'))
     menubar = tk.Menu(root)
 
