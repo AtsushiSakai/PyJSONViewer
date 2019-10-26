@@ -1,3 +1,6 @@
+## 1.4.1 (October 26, 2019)
+  - get version from version file
+
 ## 1.4.0 (August 11, 2019)
   - implement search function.
   - release_note.md to CHANGELOG.md
