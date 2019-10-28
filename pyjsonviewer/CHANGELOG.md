@@ -1,3 +1,6 @@
+## 1.4.3 (October 28, 2019)
+  - fix manifest.in
+
 ## 1.4.2 (October 28, 2019)
   - change VERSION file dir
   - fix _w problem and added MANIFEST.in
