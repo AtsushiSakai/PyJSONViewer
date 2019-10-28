@@ -17,13 +17,6 @@ from setuptools import setup, find_packages
 
 from pyjsonviewer import pyjsonviewer
 
-# read README
-try:
-    import pypandoc
-    readme = pypandoc.convert_file('README.md', 'rst')
-except(IOError, ImportError):
-    readme = open('README.md').read()
-
 setup(
     name="PyJSONViewer",
     version=pyjsonviewer.VERSION,
@@ -33,7 +26,8 @@ setup(
     maintainer='Atsushi Sakai',
     maintainer_email='asakaig@gmail.com',
     description=("A JSON file data viewer using pure python"),
-    long_description=readme,
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     python_requires='>3.6.0',
     license="MIT",
     keywords="python json tkinter",
