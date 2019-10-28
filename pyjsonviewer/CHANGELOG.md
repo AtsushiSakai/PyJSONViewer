@@ -1,3 +1,7 @@
+## 1.4.2 (October 28, 2019)
+  - change VERSION file dir
+  - fix _w problem and added MANIFEST.in
+
 ## 1.4.1 (October 26, 2019)
   - get version from version file
 
