@@ -33,8 +33,8 @@ NOTICE_FLAG="${CYAN}❯"
 ADJUSTMENTS_MSG="${QUESTION_FLAG} ${CYAN}Now you can make adjustments to ${WHITE}CHANGELOG.md${CYAN}. Then press enter to continue."
 PUSHING_MSG="${NOTICE_FLAG} Pushing new version to the ${WHITE}origin${CYAN}..."
 
-if [ -f VERSION ]; then
-    BASE_STRING=`cat VERSION`
+if [ -f VERSION.py ]; then
+    BASE_STRING=`cat VERSION.py`
     BASE_LIST=(`echo $BASE_STRING | tr '.' ' '`)
     V_MAJOR=${BASE_LIST[0]}
     V_MINOR=${BASE_LIST[1]}
@@ -50,7 +50,7 @@ if [ -f VERSION ]; then
         INPUT_STRING=$SUGGESTED_VERSION
     fi
     echo -e "${NOTICE_FLAG} Will set new version to be ${WHITE}$INPUT_STRING"
-    echo $INPUT_STRING > VERSION
+    echo $INPUT_STRING > VERSION.py
     echo "## $INPUT_STRING ($NOW)" > tmpfile
     git log --pretty=format:"  - %s" "v$BASE_STRING"...HEAD >> tmpfile
     echo "" >> tmpfile
@@ -60,12 +60,12 @@ if [ -f VERSION ]; then
     echo -e "$ADJUSTMENTS_MSG"
     read
     echo -e "$PUSHING_MSG"
-    git add CHANGELOG.md VERSION
+    git add CHANGELOG.md VERSION.py
     git commit -m "Bump version to ${INPUT_STRING}."
     git tag -a -m "Tag version ${INPUT_STRING}." "v$INPUT_STRING"
     git push origin --tags
 else
-    echo -e "${WARNING_FLAG} Could not find a VERSION file."
+    echo -e "${WARNING_FLAG} Could not find a VERSION.py file."
     echo -ne "${QUESTION_FLAG} ${CYAN}Do you want to create a version file and start from scratch? [${WHITE}y${CYAN}]: "
     read RESPONSE
     if [ "$RESPONSE" = "" ]; then RESPONSE="y"; fi
@@ -74,7 +74,7 @@ else
     if [ "$RESPONSE" = "yes" ]; then RESPONSE="y"; fi
     if [ "$RESPONSE" = "YES" ]; then RESPONSE="y"; fi
     if [ "$RESPONSE" = "y" ]; then
-        echo "0.1.0" > VERSION
+        echo "0.1.0" > VERSION.py
         echo "## 0.1.0 ($NOW)" > CHANGELOG.md
         git log --pretty=format:"  - %s" >> CHANGELOG.md
         echo "" >> CHANGELOG.md
@@ -82,8 +82,8 @@ else
         echo -e "$ADJUSTMENTS_MSG"
         read
         echo -e "$PUSHING_MSG"
-        git add VERSION CHANGELOG.md
-        git commit -m "Add VERSION and CHANGELOG.md files, Bump version to v0.1.0."
+        git add VERSION.py CHANGELOG.md
+        git commit -m "Add VERSION.py and CHANGELOG.md files, Bump version to v0.1.0."
         git tag -a -m "Tag version 0.1.0." "v0.1.0"
         git push origin --tags
     fi
