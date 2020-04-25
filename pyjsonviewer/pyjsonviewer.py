@@ -18,7 +18,7 @@ from tkinter import messagebox
 from urllib.parse import urlparse
 
 try:
-    VERSION = open(os.path.dirname(os.path.abspath(__file__))+"/VERSION", "r").readline()
+    VERSION = open(os.path.dirname(os.path.abspath(__file__))+"/VERSION.py", "r").readline()
 except:
     VERSION = "unknown"
 
