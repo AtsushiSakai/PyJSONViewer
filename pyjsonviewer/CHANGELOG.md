@@ -1,3 +1,6 @@
+## 1.4.4 (April 25, 2020)
+  - update setup py
+
 ## 1.4.3 (October 28, 2019)
   - fix manifest.in
 
