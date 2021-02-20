@@ -3,6 +3,10 @@
 # PyJSONViewer
 A JSON file data viewer using pure python
 
+[![Downloads](https://pepy.tech/badge/pyjsonviewer)](https://pepy.tech/project/pyjsonviewer)
+[![Downloads](https://pepy.tech/badge/pyjsonviewer/month)](https://pepy.tech/project/pyjsonviewer)
+[![Downloads](https://pepy.tech/badge/pyjsonviewer/week)](https://pepy.tech/project/pyjsonviewer)
+
 # Gallery
 
 - Mac OS
