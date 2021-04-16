@@ -39,15 +39,15 @@ setup(
     author_email="asakaig@gmail.com",
     maintainer='Atsushi Sakai',
     maintainer_email='asakaig@gmail.com',
-    description=("A JSON file data viewer using pure python"),
+    description="A JSON file data viewer using pure python",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     python_requires='>3.6.0',
     license="MIT",
     keywords="python json tkinter",
     packages=find_packages(),
-    entry_points={'console_scripts':
-                      ['pyjsonviewer=pyjsonviewer.pyjsonviewer:main']},
+    entry_points={
+        'console_scripts': ['pyjsonviewer=pyjsonviewer.pyjsonviewer:main']},
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
