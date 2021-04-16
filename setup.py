@@ -14,12 +14,23 @@ How to upload new release
 
 """
 from setuptools import setup, find_packages
+import os
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
-from pyjsonviewer import pyjsonviewer
+# read README
+try:
+    import pypandoc
+    readme = pypandoc.convert_file(PROJECT_PATH + '/README.md', 'rst')
+except(IOError, ImportError):
+    readme = open(PROJECT_PATH + '/README.md').read()
+
+# read VERSION
+with open(PROJECT_PATH + "/pyjsonviewer/VERSION", 'r') as fd:
+    VERSION = fd.readline().rstrip('\n')
 
 setup(
     name="PyJSONViewer",
-    version=pyjsonviewer.VERSION,
+    version=VERSION,
     url="https://github.com/AtsushiSakai/PyJSONViewer",
     author="Atsushi Sakai",
     author_email="asakaig@gmail.com",
