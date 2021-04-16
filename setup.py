@@ -46,6 +46,8 @@ setup(
     license="MIT",
     keywords="python json tkinter",
     packages=find_packages(),
+    entry_points={'console_scripts':
+                      ['pyjsonviewer=pyjsonviewer.pyjsonviewer:main']},
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
