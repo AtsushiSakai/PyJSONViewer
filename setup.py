@@ -12,6 +12,9 @@ How to upload new release
 
 4. upload twine upload --repository pypi dist/PyJSONViewer-1.3.0.tar.gz
 
+twine check dist/pyroombaadapter-0.1.2.tar.gz
+twine upload --repository pypitest dist/pyroombaadapter-0.1.8.tar.gz
+pip install --upgrade -i https://test.pypi.org/simple/ pyroombaadapter
 """
 from setuptools import setup, find_packages
 import os
