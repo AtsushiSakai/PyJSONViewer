@@ -134,7 +134,7 @@ You can also format json file with
 
 >: JSONFormat()
 
-# Open a link with a brower
+# Open a link with a browser
 
 If a URL is included in a json file,
 
