@@ -51,14 +51,6 @@ or download as zip.
 
 # How to use
 
-## Bash alias setting
-
-If you add this alias settting in your .bashrc
-
-> alias pyjsonviewer='python -m pyjsonviewer'
-
-you can use this tool with just typing "pyjsonviewer" in your bash.
-
 ## Select JSON file with CUI.
 
 1. Run pyjsonviewer with -f option and the path to a JSON file:
@@ -142,7 +134,7 @@ You can also format json file with
 
 >: JSONFormat()
 
-# Open a link with a brower
+# Open a link with a browser
 
 If a URL is included in a json file,
 
