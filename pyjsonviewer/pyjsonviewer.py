@@ -18,7 +18,7 @@ from tkinter import messagebox
 from urllib.parse import urlparse
 
 try:
-    VERSION = open(os.path.dirname(os.path.abspath(__file__))+"/VERSION.py", "r").readline()
+    VERSION = open(os.path.dirname(os.path.abspath(__file__))+"/VERSION", "r").readline()
 except:
     VERSION = "unknown"
 
@@ -256,7 +256,7 @@ def main():
     root.title('PyJSONViewer')
     root.geometry("500x500")
     root.tk.call('wm', 'iconphoto', root._w,
-                 tk.PhotoImage(file=PROJECT_DIR + '/icon.py'))
+                 tk.PhotoImage(file=PROJECT_DIR + '/icon.png'))
     menubar = tk.Menu(root)
 
     if args.open:
