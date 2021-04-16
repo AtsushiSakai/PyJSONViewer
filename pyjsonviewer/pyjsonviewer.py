@@ -114,7 +114,7 @@ class JSONTreeFrame(ttk.Frame):
 
     def select_json_file(self):
         file_path = filedialog.askopenfilename(
-            initialdir=self.initial_dir, filetypes=[("JSON files", "*.json")])
+            initialdir=self.initial_dir, filetypes=[("JSON files", "*.json"),("All Files", "*.*")])
         self.set_table_data_from_json(file_path)
 
     def expand_all(self):
@@ -262,7 +262,7 @@ def main():
     if args.open:
         args.file = filedialog.askopenfilename(
             initialdir=args.dir,
-            filetypes=[("JSON files", "*.json")])
+            filetypes=[("JSON files", "*.json"),("All Files", "*.*")])
 
     app = JSONTreeFrame(root, json_path=args.file, initial_dir=args.dir)
 
