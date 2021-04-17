@@ -120,17 +120,20 @@ class JSONTreeFrame(ttk.Frame):
         if self.is_url(item_text):
             webbrowser.open(item_text)
 
-    def select_json_file(self):
+    def select_json_file(self, _):
+        #:param _: event arg (not used)
         file_path = filedialog.askopenfilename(
             initialdir=self.initial_dir,
             filetypes=FILETYPES)
         self.set_table_data_from_json(file_path)
 
-    def expand_all(self):
+    def expand_all(self, _):
+        #:param _: event arg (not used)
         for item in self.get_all_children(self.tree):
             self.tree.item(item, open=True)
 
-    def collapse_all(self):
+    def collapse_all(self, _):
+        #:param _: event arg (not used)
         for item in self.get_all_children(self.tree):
             self.tree.item(item, open=False)
 
@@ -165,7 +168,8 @@ class JSONTreeFrame(ttk.Frame):
         self.set_table_data_from_json(value)
         self.sub_win.destroy()  # close window
 
-    def select_json_file_from_history(self):
+    def select_json_file_from_history(self, _):
+        #:param _: event arg (not used)
         self.sub_win = tk.Toplevel()
         lb = self.Listbox(self.sub_win)
         with open(HISTORY_FILE_PATH) as f:
@@ -305,6 +309,11 @@ def main():
     app.init_search_box()
 
     root.config(menu=menubar)
+    root.bind_all("<Control-o>",app.select_json_file)
+    root.bind_all("<Control-h>",app.select_json_file_from_history)
+    root.bind_all("<Control-e>",app.expand_all)
+    root.bind_all("<Control-l>",app.collapse_all)
+
     root.mainloop()
 
 
