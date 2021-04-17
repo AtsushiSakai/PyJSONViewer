@@ -17,16 +17,23 @@ from tkinter import font
 from tkinter import messagebox
 from urllib.parse import urlparse
 
-try:
-    VERSION = open(os.path.dirname(os.path.abspath(__file__))+"/VERSION", "r").readline()
-except:
-    VERSION = "unknown"
+
+def get_version(project_dir):
+    try:
+        version = open(project_dir + "/VERSION", "r").readline()
+    except FileNotFoundError:
+        version = "unknown"
+    return version
+
 
 # === Config ===
 MAX_N_SHOW_ITEM = 300
-HISTORY_FILE_PATH = os.path.expanduser('~') + "/.pyjsonviewer_history"
 MAX_HISTORY = 10
+FILETYPES = [("JSON files", "*.json"), ("All Files", "*.*")]
+HISTORY_FILE_PATH = os.path.join(os.path.expanduser('~'),
+                                 ".pyjsonviewer_history")
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+VERSION = get_version(PROJECT_DIR)
 
 
 class JSONTreeFrame(ttk.Frame):
@@ -35,7 +42,7 @@ class JSONTreeFrame(ttk.Frame):
             auto width list box container
         """
 
-        def autowidth(self, maxwidth):
+        def auto_width(self, max_width):
             f = font.Font(font=self.cget("font"))
             pixels = 0
             for item in self.get(0, "end"):
@@ -43,7 +50,7 @@ class JSONTreeFrame(ttk.Frame):
             # bump listbox size until all entries fit
             pixels = pixels + 10
             width = int(self.cget("width"))
-            for w in range(0, maxwidth + 1, 5):
+            for w in range(0, max_width + 1, 5):
                 if self.winfo_reqwidth() >= pixels:
                     break
                 self.config(width=width + w)
@@ -114,7 +121,8 @@ class JSONTreeFrame(ttk.Frame):
 
     def select_json_file(self):
         file_path = filedialog.askopenfilename(
-            initialdir=self.initial_dir, filetypes=[("JSON files", "*.json"),("All Files", "*.*")])
+            initialdir=self.initial_dir,
+            filetypes=FILETYPES)
         self.set_table_data_from_json(file_path)
 
     def expand_all(self):
@@ -165,7 +173,7 @@ class JSONTreeFrame(ttk.Frame):
                 lb.insert(ln, line.replace("\n", ""))
         lb.bind('<Double-1>', self.select_listbox_item)
         maximum_width = 250
-        lb.autowidth(maximum_width)
+        lb.auto_width(maximum_width)
         lb.pack()
 
     def save_json_history(self, file_path):
@@ -203,7 +211,8 @@ class JSONTreeFrame(ttk.Frame):
 
     def open_release_note(self):
         self.open_url(
-            "https://github.com/AtsushiSakai/PyJSONViewer/blob/master/CHANGELOG.md")
+            "https://github.com/AtsushiSakai/PyJSONViewer/blob/master"
+            "/CHANGELOG.md")
 
     def open_url(self, url):
         if self.is_url(url):
@@ -228,7 +237,7 @@ class JSONTreeFrame(ttk.Frame):
 
     @staticmethod
     def load_json_data(file_path):
-        with open(file_path, encoding = 'utf-8') as f:
+        with open(file_path, encoding='utf-8') as f:
             return json.load(f)
 
     @staticmethod
@@ -262,7 +271,7 @@ def main():
     if args.open:
         args.file = filedialog.askopenfilename(
             initialdir=args.dir,
-            filetypes=[("JSON files", "*.json"),("All Files", "*.*")])
+            filetypes=FILETYPES)
 
     app = JSONTreeFrame(root, json_path=args.file, initial_dir=args.dir)
 
