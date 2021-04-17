@@ -228,7 +228,7 @@ class JSONTreeFrame(ttk.Frame):
 
     @staticmethod
     def load_json_data(file_path):
-        with open(file_path) as f:
+        with open(file_path, encoding = 'utf-8') as f:
             return json.load(f)
 
     @staticmethod
