@@ -149,7 +149,7 @@ class JSONTreeFrame(ttk.Frame):
     def find(self, search_text):
         if not search_text:
             return
-        self.collapse_all()
+        self.collapse_all(None)
         for item_id in self.get_all_children(self.tree):
             item_text = self.tree.item(item_id, 'text')
             if search_text.lower() in item_text.lower():
