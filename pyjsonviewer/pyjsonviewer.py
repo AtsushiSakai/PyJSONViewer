@@ -102,6 +102,7 @@ class JSONTreeFrame(ttk.Frame):
         if type(value) is not dict:
             if type(value) is list:
                 value = value[0:MAX_N_SHOW_ITEM]
+                value = "["+",".join(value)+"]"
             self.tree.insert(node, 'end', text=value, open=False)
         else:
             for (key, value) in value.items():
