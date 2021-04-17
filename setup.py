@@ -4,13 +4,13 @@ Setup script for PyJSONViewer
 
 How to upload new release
 
-1. change version in setup.py
+1. run bum-version.sh
 
 2. setup twine, see:https://blog.amedama.jp/entry/2017/12/31/175036
 
 3. create zip file: python setup.py sdist
 
-4. upload twine upload --repository pypi dist/PyJSONViewer-1.3.0.tar.gz
+4. upload: twine upload --repository pypi dist/PyJSONViewer-1.3.0.tar.gz
 
 twine check dist/pyroombaadapter-0.1.2.tar.gz
 twine upload --repository pypitest dist/pyroombaadapter-0.1.8.tar.gz
@@ -46,6 +46,7 @@ setup(
     license="MIT",
     keywords="python json tkinter",
     packages=find_packages(),
+    include_package_data=True,
     entry_points={
         'console_scripts': ['pyjsonviewer=pyjsonviewer.pyjsonviewer:main']},
     classifiers=[
