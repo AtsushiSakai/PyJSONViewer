@@ -1,3 +1,6 @@
+## 1.5.1 (April 17, 2021)
+- fix install issue
+
 ## 1.5.0 (April 17, 2021)
   - fix version file name issue
   - add list print function. (#27)
