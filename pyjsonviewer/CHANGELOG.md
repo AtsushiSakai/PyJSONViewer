@@ -1,3 +1,16 @@
+## 1.5.0 (April 17, 2021)
+  - fix version file name issue
+  - add list print function. (#27)
+  - Added Character Set for viewing in Windows (#24)
+  - Merge pull request #23 from AtsushiSakai/issue_15
+  - Merge pull request #21 from abshk-jr/master
+  - Merge pull request #22 from AtsushiSakai/issue13
+  - Added second option to open files that do not end with ".json" (fixes #17)
+  - Merge pull request #20 from AtsushiSakai/issue_19
+  - add download badge in README.md
+  - update VERSION to VERSION.py
+  - fix version issues
+
 ## 1.4.4 (April 25, 2020)
   - update setup py
 
