@@ -234,7 +234,7 @@ class JSONTreeFrame(ttk.Frame):
     def open_release_note(self):
         self.open_url(
             "https://github.com/AtsushiSakai/PyJSONViewer/blob/master"
-            "/CHANGELOG.md")
+            "/pyjsonviewer/CHANGELOG.md")
 
     def open_url(self, url):
         if self.is_url(url):
