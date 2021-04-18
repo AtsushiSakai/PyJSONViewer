@@ -1,3 +1,8 @@
+## 1.5.2 (April 18, 2021)
+  - fix changelog path
+  - fix list print issue for non str type (#30)
+  - fix menu keyboard shortcuts issues. (#29)
+
 ## 1.5.1 (April 17, 2021)
 - fix install issue
 
