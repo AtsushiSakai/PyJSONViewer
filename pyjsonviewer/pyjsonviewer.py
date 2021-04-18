@@ -102,17 +102,17 @@ class JSONTreeFrame(ttk.Frame):
         if type(value) is not dict:
             if type(value) is list:
                 value = value[0:MAX_N_SHOW_ITEM]
-                value = "["+",".join(value)+"]"
+                value = "[" + ",".join(map(str, value)) + "]"
             self.tree.insert(node, 'end', text=value, open=False)
         else:
             for (key, value) in value.items():
                 self.insert_node(node, key, value)
 
-    def click_item(self, _):
+    def click_item(self, event=None):
         """
         Callback function when an item is clicked
 
-        :param _: event arg (not used)
+        :param event: event arg (not used)
         """
         item_id = self.tree.selection()
         item_text = self.tree.item(item_id, 'text')
@@ -120,29 +120,41 @@ class JSONTreeFrame(ttk.Frame):
         if self.is_url(item_text):
             webbrowser.open(item_text)
 
-    def select_json_file(self, _):
-        #:param _: event arg (not used)
+    def select_json_file(self, event=None):
+        """
+        :param event: event arg (not used)
+        """
         file_path = filedialog.askopenfilename(
             initialdir=self.initial_dir,
             filetypes=FILETYPES)
         self.set_table_data_from_json(file_path)
 
-    def expand_all(self, _):
-        #:param _: event arg (not used)
+    def expand_all(self, event=None):
+        """
+        :param event: event arg (not used)
+        """
         for item in self.get_all_children(self.tree):
             self.tree.item(item, open=True)
 
-    def collapse_all(self, _):
-        #:param _: event arg (not used)
+    def collapse_all(self, event=None):
+        """
+        :param event: event arg (not used)
+        """
         for item in self.get_all_children(self.tree):
             self.tree.item(item, open=False)
 
-    def find_window(self):
+    def find_window(self, event=None):
+        """
+        :param event: event arg (not used)
+        """
         self.search_box = tk.Entry(self.master)
         self.search_box.pack()
         self.search_box.bind('<Key>', self.find_word)
 
-    def find_word(self, _):
+    def find_word(self, event=None):
+        """
+        :param event: event arg (not used)
+        """
         search_text = self.search_box.get()
         self.find(search_text)
 
@@ -161,15 +173,20 @@ class JSONTreeFrame(ttk.Frame):
             children += self.get_all_children(tree, child)
         return children
 
-    def select_listbox_item(self, evt):
-        w = evt.widget
+    def select_listbox_item(self, event):
+        """
+        :param event: event arg (not used)
+        """
+        w = event.widget
         index = int(w.curselection()[0])
         value = w.get(index)
         self.set_table_data_from_json(value)
         self.sub_win.destroy()  # close window
 
-    def select_json_file_from_history(self, _):
-        #:param _: event arg (not used)
+    def select_json_file_from_history(self, event=None):
+        """
+        :param event: event arg (not used)
+        """
         self.sub_win = tk.Toplevel()
         lb = self.Listbox(self.sub_win)
         with open(HISTORY_FILE_PATH) as f:
@@ -309,10 +326,11 @@ def main():
     app.init_search_box()
 
     root.config(menu=menubar)
-    root.bind_all("<Control-o>",app.select_json_file)
-    root.bind_all("<Control-h>",app.select_json_file_from_history)
-    root.bind_all("<Control-e>",app.expand_all)
-    root.bind_all("<Control-l>",app.collapse_all)
+    root.bind_all("<Control-o>", lambda e: app.select_json_file(event=e))
+    root.bind_all("<Control-h>",
+                  lambda e: app.select_json_file_from_history(event=e))
+    root.bind_all("<Control-e>", lambda e: app.expand_all(event=e))
+    root.bind_all("<Control-l>", lambda e: app.collapse_all(event=e))
 
     root.mainloop()
 
