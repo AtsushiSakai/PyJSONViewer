@@ -164,6 +164,7 @@ class JSONTreeFrame(ttk.Frame):
         self.collapse_all(None)
         for item_id in self.get_all_children(self.tree):
             item_text = self.tree.item(item_id, 'text')
+            item_text = str(item_text)
             if search_text.lower() in item_text.lower():
                 self.tree.see(item_id)
 
@@ -225,8 +226,12 @@ class JSONTreeFrame(ttk.Frame):
 
     def insert_nodes(self, data):
         parent = ""
-        for (key, value) in data.items():
-            self.insert_node(parent, key, value)
+        if isinstance(data, list):
+            for index, value in enumerate(data):
+                self.insert_node(parent, index, value)
+        elif isinstance(data, dict):
+            for (key, value) in data.items():
+                self.insert_node(parent, key, value)
 
     def open_github_page(self):
         self.open_url("https://github.com/AtsushiSakai/PyJSONViewer")
