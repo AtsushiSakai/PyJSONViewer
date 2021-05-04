@@ -47,6 +47,7 @@ setup(
     keywords="python json tkinter",
     packages=find_packages(),
     include_package_data=True,
+    py_modules=["pyjsonviewer"],
     entry_points={
         'console_scripts': ['pyjsonviewer=pyjsonviewer.pyjsonviewer:main']},
     classifiers=[
