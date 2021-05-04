@@ -23,7 +23,7 @@ def test_dictionary_file():
     # print([app.tree.item(item_id, 'text') for item_id in children])
 
     # then
-    assert len(children) == 31
+    assert len(children) == 53
 
 
 def test_list_file():
@@ -55,7 +55,7 @@ def test_nested_file():
     print([app.tree.item(item_id, 'text') for item_id in children])
 
     # then
-    assert len(children) == 33
+    assert len(children) == 72
 
 
 def test_search():
