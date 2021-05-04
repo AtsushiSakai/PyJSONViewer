@@ -100,7 +100,7 @@ class JSONTreeFrame(ttk.Frame):
             return
 
         if type(value) in (list, tuple):
-            for (index, item) in enumerate(value):
+            for (index, item) in enumerate(value[:MAX_N_SHOW_ITEM]):
                 self.insert_node(node, index, item)
         elif isinstance(value, dict):
             for (key, value) in value.items():
