@@ -55,7 +55,7 @@ class JSONTreeFrame(ttk.Frame):
                     break
                 self.config(width=width + w)
 
-    def __init__(self, master, json_path=None, initial_dir="~/"):
+    def __init__(self, master, json_path=None, json_data=None, initial_dir="~/"):
         super().__init__(master)
         self.master = master
         self.tree = ttk.Treeview(self)
@@ -68,7 +68,9 @@ class JSONTreeFrame(ttk.Frame):
         self.search_label = None
 
         if json_path:
-            self.set_table_data_from_json(json_path)
+            self.set_table_data_from_json_path(json_path)
+        elif json_data:
+            self.set_table_data_from_json(json_data)
 
     def create_widgets(self):
         self.tree.bind('<Double-1>', self.click_item)
@@ -127,7 +129,7 @@ class JSONTreeFrame(ttk.Frame):
         file_path = filedialog.askopenfilename(
             initialdir=self.initial_dir,
             filetypes=FILETYPES)
-        self.set_table_data_from_json(file_path)
+        self.set_table_data_from_json_path(file_path)
 
     def expand_all(self, event=None):
         """
@@ -181,7 +183,7 @@ class JSONTreeFrame(ttk.Frame):
         w = event.widget
         index = int(w.curselection()[0])
         value = w.get(index)
-        self.set_table_data_from_json(value)
+        self.set_table_data_from_json_path(value)
         self.sub_win.destroy()  # close window
 
     def select_json_file_from_history(self, event=None):
@@ -214,11 +216,15 @@ class JSONTreeFrame(ttk.Frame):
             for line in lines:
                 f.write(line.replace("\n", "") + "\n")
 
-    def set_table_data_from_json(self, file_path):
+    def set_table_data_from_json(self, json_data):
+        assert type(json_data) in (list, dict)
+        self.delete_all_nodes()
+        self.insert_nodes(json_data)
+
+    def set_table_data_from_json_path(self, file_path):
         data = self.load_json_data(file_path)
         self.save_json_history(file_path)
-        self.delete_all_nodes()
-        self.insert_nodes(data)
+        self.set_table_data_from_json(data)
 
     def delete_all_nodes(self):
         for i in self.tree.get_children():
@@ -277,17 +283,7 @@ class JSONTreeFrame(ttk.Frame):
         messagebox.showinfo("About", msg)
 
 
-def main():
-    print(__file__ + " start!!")
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-f', '--file', type=str, help='JSON file path')
-    parser.add_argument('-d', '--dir', type=str,
-                        help='JSON file directory')
-    parser.add_argument('-o', '--open', action='store_true',
-                        default=False, help='Open with finder')
-    args = parser.parse_args()
-
+def view_data(json_file=None, json_data=None, initial_dir=None):
     root: Tk = tk.Tk()
     root.title('PyJSONViewer')
     root.geometry("500x500")
@@ -295,12 +291,12 @@ def main():
                  tk.PhotoImage(file=PROJECT_DIR + '/icon.png'))
     menubar = tk.Menu(root)
 
-    if args.open:
-        args.file = filedialog.askopenfilename(
-            initialdir=args.dir,
-            filetypes=FILETYPES)
-
-    app = JSONTreeFrame(root, json_path=args.file, initial_dir=args.dir)
+    if json_file:
+        app = JSONTreeFrame(root, json_path=json_file, initial_dir=initial_dir)
+    elif json_data:
+        app = JSONTreeFrame(root, json_data=json_data)
+    else:
+        app = JSONTreeFrame(root)
 
     file_menu = tk.Menu(menubar, tearoff=0)
     file_menu.add_command(label="Open", accelerator='Ctrl+O',
@@ -338,6 +334,24 @@ def main():
     root.bind_all("<Control-l>", lambda e: app.collapse_all(event=e))
 
     root.mainloop()
+
+
+def main():
+    print(__file__ + " start!!")
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', '--file', type=str, help='JSON file path')
+    parser.add_argument('-d', '--dir', type=str,
+                        help='JSON file directory')
+    parser.add_argument('-o', '--open', action='store_true',
+                        default=False, help='Open with finder')
+    args = parser.parse_args()
+
+    if args.open:
+        args.file = filedialog.askopenfilename(
+            initialdir=args.dir,
+            filetypes=FILETYPES)
+    view_data(json_file=args.file, initial_dir=args.dir)
 
 
 if __name__ == '__main__':
