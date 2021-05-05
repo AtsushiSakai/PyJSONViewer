@@ -51,6 +51,26 @@ or download as zip.
 
 # How to use
 
+## Inside python code
+
+### View json file
+```
+import pyjsonviewer
+
+pyjsonviewer.view_data(json_file="dat/list.json")
+
+```
+JSON data tree will be shown.
+
+### View json object
+```
+import pyjsonviewer
+json_object = {"a":[1,2,3], "b":"test"}
+pyjsonviewer.view_data(json_data=json_object)
+```
+
+JSON data tree will be shown.
+
 ## Select JSON file with CUI.
 
 1. Run pyjsonviewer with -f option and the path to a JSON file:
