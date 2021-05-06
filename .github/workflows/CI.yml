@@ -1,0 +1,33 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.7', '3.8', '3.9']
+
+    name: Python ${{ matrix.python-version }} CI
+
+    steps:
+    - uses: actions/checkout@v2
+    - run: git fetch --prune --unshallow
+
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install pytest
+    - name: unit tests
+      run: |
+        disp=:99
+        screen=0
+        geom=640x480x24
+        exec Xvfb $disp -screen $screen $geom 2>/tmp/Xvfb.log &
+        export DISPLAY=:99
+        cd tests && pytest .
