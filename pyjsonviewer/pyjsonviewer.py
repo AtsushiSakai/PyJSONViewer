@@ -99,14 +99,14 @@ class JSONTreeFrame(ttk.Frame):
         if value is None:
             return
 
-        if type(value) is not dict:
-            if type(value) is list:
-                value = value[0:MAX_N_SHOW_ITEM]
-                value = "[" + ",".join(map(str, value)) + "]"
-            self.tree.insert(node, 'end', text=value, open=False)
+        if type(value) in (list, tuple):
+            for index, item in enumerate(value[:MAX_N_SHOW_ITEM]):
+                self.insert_node(node, index, item)
+        elif isinstance(value, dict):
+            for key, item in value.items():
+                self.insert_node(node, key, item)
         else:
-            for (key, value) in value.items():
-                self.insert_node(node, key, value)
+            self.tree.insert(node, 'end', text=value, open=False)
 
     def click_item(self, event=None):
         """
