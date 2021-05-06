@@ -24,4 +24,10 @@ jobs:
       run: |
         python -m pip install pytest
     - name: unit tests
-      run: cd tests && pytest .
+      run: |
+        disp=:99
+        screen=0
+        geom=640x480x24
+        exec Xvfb $disp -screen $screen $geom 2>/tmp/Xvfb.log &
+        export DISPLAY=:99
+        cd tests && pytest .
