@@ -108,7 +108,6 @@ class JSONTreeFrame(ttk.Frame):
         else:
             self.tree.insert(node, 'end', text=value, open=False)
 
-
     def click_item(self, event=None):
         """
         Callback function when an item is clicked
