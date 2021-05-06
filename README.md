@@ -3,6 +3,7 @@
 # PyJSONViewer
 A JSON file data viewer using pure python
 
+[![CI](https://github.com/AtsushiSakai/PyJSONViewer/actions/workflows/CI.yml/badge.svg)](https://github.com/AtsushiSakai/PyJSONViewer/actions/workflows/CI.yml)
 [![Downloads](https://pepy.tech/badge/pyjsonviewer)](https://pepy.tech/project/pyjsonviewer)
 [![Downloads](https://pepy.tech/badge/pyjsonviewer/month)](https://pepy.tech/project/pyjsonviewer)
 [![Downloads](https://pepy.tech/badge/pyjsonviewer/week)](https://pepy.tech/project/pyjsonviewer)
@@ -39,7 +40,7 @@ Features:
 
 # Requirements
 
-- Python 3.6.x or higher
+- Python 3.7 or higher
 
 # Download
 
