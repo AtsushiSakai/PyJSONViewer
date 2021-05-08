@@ -1,3 +1,9 @@
+## 1.6.0 (May 08, 2021)
+  - Make pyjsonviewer  callable from python. (#39)
+  - Add github actions CI. (#41)
+  - list under second layer should be expanded as trees. #35 (#38)
+  - add support for list data. #31 (#32)
+
 ## 1.5.2 (April 18, 2021)
   - fix changelog path
   - fix list print issue for non str type (#30)
