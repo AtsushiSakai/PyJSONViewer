@@ -106,6 +106,25 @@ You can set initial directory:
 
 - Show release note: Help -> Release note
 
+## Inside python code
+
+### View json file
+```
+import pyjsonviewer
+
+pyjsonviewer.view_data(json_file="dat/list.json")
+
+```
+JSON data tree will be shown.
+
+### View json object
+```
+import pyjsonviewer
+json_object = {"a":[1,2,3], "b":"test"}
+pyjsonviewer.view_data(json_data=json_object)
+```
+JSON data tree will be shown.
+
 ## Vimrc setting
 
 If you are a vim user, you can set this command in your vimrc.
