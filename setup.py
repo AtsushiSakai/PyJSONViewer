@@ -27,13 +27,13 @@ try:
 except(IOError, ImportError):
     readme = open(PROJECT_PATH + '/README.md').read()
 
-# read VERSION
+# read __version__
 with open(PROJECT_PATH + "/pyjsonviewer/VERSION", 'r') as fd:
-    VERSION = fd.readline().rstrip('\n')
+    __version__ = fd.readline().rstrip('\n')
 
 setup(
     name="PyJSONViewer",
-    version=VERSION,
+    version=__version__,
     url="https://github.com/AtsushiSakai/PyJSONViewer",
     author="Atsushi Sakai",
     author_email="asakaig@gmail.com",
