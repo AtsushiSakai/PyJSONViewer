@@ -33,8 +33,8 @@ FILETYPES = [("JSON files", "*.json"), ("All Files", "*.*")]
 HISTORY_FILE_PATH = os.path.join(os.path.expanduser('~'),
                                  ".pyjsonviewer_history")
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-VERSION = get_version(PROJECT_DIR)
-
+__version__ = get_version(PROJECT_DIR)
+VERSION = eval("(" + __version__.replace(".", ",") + ")")
 
 class JSONTreeFrame(ttk.Frame):
     class Listbox(tk.Listbox):
@@ -278,7 +278,7 @@ class JSONTreeFrame(ttk.Frame):
         msg = """
         PyJSONViewer
         by Atsushi Sakai(@Atsushi_twi)
-        Ver.""" + VERSION + """\n
+        Ver.""" + __version__ + """\n
         """
         messagebox.showinfo("About", msg)
 
