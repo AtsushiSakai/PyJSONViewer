@@ -17,14 +17,24 @@ from tkinter import font
 from tkinter import messagebox
 from urllib.parse import urlparse
 
-VERSION = open(os.path.dirname(os.path.abspath(__file__))+"/../VERSION", "r").readline()
+
+def get_version(project_dir):
+    try:
+        version = open(project_dir + "/VERSION", "r").readline()
+    except FileNotFoundError:
+        version = "unknown"
+    return version
+
 
 # === Config ===
 MAX_N_SHOW_ITEM = 300
-HISTORY_FILE_PATH = os.path.expanduser('~') + "/.pyjsonviewer_history"
 MAX_HISTORY = 10
+FILETYPES = [("JSON files", "*.json"), ("All Files", "*.*")]
+HISTORY_FILE_PATH = os.path.join(os.path.expanduser('~'),
+                                 ".pyjsonviewer_history")
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-
+__version__ = get_version(PROJECT_DIR)
+VERSION = eval("(" + __version__.replace(".", ",") + ")")
 
 class JSONTreeFrame(ttk.Frame):
     class Listbox(tk.Listbox):
@@ -32,7 +42,7 @@ class JSONTreeFrame(ttk.Frame):
             auto width list box container
         """
 
-        def autowidth(self, maxwidth):
+        def auto_width(self, max_width):
             f = font.Font(font=self.cget("font"))
             pixels = 0
             for item in self.get(0, "end"):
@@ -40,12 +50,12 @@ class JSONTreeFrame(ttk.Frame):
             # bump listbox size until all entries fit
             pixels = pixels + 10
             width = int(self.cget("width"))
-            for w in range(0, maxwidth + 1, 5):
+            for w in range(0, max_width + 1, 5):
                 if self.winfo_reqwidth() >= pixels:
                     break
                 self.config(width=width + w)
 
-    def __init__(self, master, json_path=None, initial_dir="~/"):
+    def __init__(self, master, json_path=None, json_data=None, initial_dir="~/"):
         super().__init__(master)
         self.master = master
         self.tree = ttk.Treeview(self)
@@ -58,7 +68,9 @@ class JSONTreeFrame(ttk.Frame):
         self.search_label = None
 
         if json_path:
-            self.set_table_data_from_json(json_path)
+            self.set_table_data_from_json_path(json_path)
+        elif json_data:
+            self.set_table_data_from_json(json_data)
 
     def create_widgets(self):
         self.tree.bind('<Double-1>', self.click_item)
@@ -89,19 +101,20 @@ class JSONTreeFrame(ttk.Frame):
         if value is None:
             return
 
-        if type(value) is not dict:
-            if type(value) is list:
-                value = value[0:MAX_N_SHOW_ITEM]
-            self.tree.insert(node, 'end', text=value, open=False)
+        if type(value) in (list, tuple):
+            for index, item in enumerate(value[:MAX_N_SHOW_ITEM]):
+                self.insert_node(node, index, item)
+        elif isinstance(value, dict):
+            for key, item in value.items():
+                self.insert_node(node, key, item)
         else:
-            for (key, value) in value.items():
-                self.insert_node(node, key, value)
+            self.tree.insert(node, 'end', text=value, open=False)
 
-    def click_item(self, _):
+    def click_item(self, event=None):
         """
         Callback function when an item is clicked
 
-        :param _: event arg (not used)
+        :param event: event arg (not used)
         """
         item_id = self.tree.selection()
         item_text = self.tree.item(item_id, 'text')
@@ -109,34 +122,51 @@ class JSONTreeFrame(ttk.Frame):
         if self.is_url(item_text):
             webbrowser.open(item_text)
 
-    def select_json_file(self):
+    def select_json_file(self, event=None):
+        """
+        :param event: event arg (not used)
+        """
         file_path = filedialog.askopenfilename(
-            initialdir=self.initial_dir, filetypes=[("JSON files", "*.json")])
-        self.set_table_data_from_json(file_path)
+            initialdir=self.initial_dir,
+            filetypes=FILETYPES)
+        self.set_table_data_from_json_path(file_path)
 
-    def expand_all(self):
+    def expand_all(self, event=None):
+        """
+        :param event: event arg (not used)
+        """
         for item in self.get_all_children(self.tree):
             self.tree.item(item, open=True)
 
-    def collapse_all(self):
+    def collapse_all(self, event=None):
+        """
+        :param event: event arg (not used)
+        """
         for item in self.get_all_children(self.tree):
             self.tree.item(item, open=False)
 
-    def find_window(self):
+    def find_window(self, event=None):
+        """
+        :param event: event arg (not used)
+        """
         self.search_box = tk.Entry(self.master)
         self.search_box.pack()
         self.search_box.bind('<Key>', self.find_word)
 
-    def find_word(self, _):
+    def find_word(self, event=None):
+        """
+        :param event: event arg (not used)
+        """
         search_text = self.search_box.get()
         self.find(search_text)
 
     def find(self, search_text):
         if not search_text:
             return
-        self.collapse_all()
+        self.collapse_all(None)
         for item_id in self.get_all_children(self.tree):
             item_text = self.tree.item(item_id, 'text')
+            item_text = str(item_text)
             if search_text.lower() in item_text.lower():
                 self.tree.see(item_id)
 
@@ -146,14 +176,20 @@ class JSONTreeFrame(ttk.Frame):
             children += self.get_all_children(tree, child)
         return children
 
-    def select_listbox_item(self, evt):
-        w = evt.widget
+    def select_listbox_item(self, event):
+        """
+        :param event: event arg (not used)
+        """
+        w = event.widget
         index = int(w.curselection()[0])
         value = w.get(index)
-        self.set_table_data_from_json(value)
+        self.set_table_data_from_json_path(value)
         self.sub_win.destroy()  # close window
 
-    def select_json_file_from_history(self):
+    def select_json_file_from_history(self, event=None):
+        """
+        :param event: event arg (not used)
+        """
         self.sub_win = tk.Toplevel()
         lb = self.Listbox(self.sub_win)
         with open(HISTORY_FILE_PATH) as f:
@@ -162,7 +198,7 @@ class JSONTreeFrame(ttk.Frame):
                 lb.insert(ln, line.replace("\n", ""))
         lb.bind('<Double-1>', self.select_listbox_item)
         maximum_width = 250
-        lb.autowidth(maximum_width)
+        lb.auto_width(maximum_width)
         lb.pack()
 
     def save_json_history(self, file_path):
@@ -180,11 +216,15 @@ class JSONTreeFrame(ttk.Frame):
             for line in lines:
                 f.write(line.replace("\n", "") + "\n")
 
-    def set_table_data_from_json(self, file_path):
+    def set_table_data_from_json(self, json_data):
+        assert type(json_data) in (list, dict)
+        self.delete_all_nodes()
+        self.insert_nodes(json_data)
+
+    def set_table_data_from_json_path(self, file_path):
         data = self.load_json_data(file_path)
         self.save_json_history(file_path)
-        self.delete_all_nodes()
-        self.insert_nodes(data)
+        self.set_table_data_from_json(data)
 
     def delete_all_nodes(self):
         for i in self.tree.get_children():
@@ -192,15 +232,20 @@ class JSONTreeFrame(ttk.Frame):
 
     def insert_nodes(self, data):
         parent = ""
-        for (key, value) in data.items():
-            self.insert_node(parent, key, value)
+        if isinstance(data, list):
+            for index, value in enumerate(data):
+                self.insert_node(parent, index, value)
+        elif isinstance(data, dict):
+            for (key, value) in data.items():
+                self.insert_node(parent, key, value)
 
     def open_github_page(self):
         self.open_url("https://github.com/AtsushiSakai/PyJSONViewer")
 
     def open_release_note(self):
         self.open_url(
-            "https://github.com/AtsushiSakai/PyJSONViewer/blob/master/CHANGELOG.md")
+            "https://github.com/AtsushiSakai/PyJSONViewer/blob/master"
+            "/pyjsonviewer/CHANGELOG.md")
 
     def open_url(self, url):
         if self.is_url(url):
@@ -225,7 +270,7 @@ class JSONTreeFrame(ttk.Frame):
 
     @staticmethod
     def load_json_data(file_path):
-        with open(file_path) as f:
+        with open(file_path, encoding='utf-8') as f:
             return json.load(f)
 
     @staticmethod
@@ -233,35 +278,25 @@ class JSONTreeFrame(ttk.Frame):
         msg = """
         PyJSONViewer
         by Atsushi Sakai(@Atsushi_twi)
-        Ver.""" + VERSION + """\n
+        Ver.""" + __version__ + """\n
         """
         messagebox.showinfo("About", msg)
 
 
-def main():
-    print(__file__ + " start!!")
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-f', '--file', type=str, help='JSON file path')
-    parser.add_argument('-d', '--dir', type=str,
-                        help='JSON file directory')
-    parser.add_argument('-o', '--open', action='store_true',
-                        default=False, help='Open with finder')
-    args = parser.parse_args()
-
+def view_data(json_file=None, json_data=None, initial_dir=None):
     root: Tk = tk.Tk()
     root.title('PyJSONViewer')
     root.geometry("500x500")
     root.tk.call('wm', 'iconphoto', root._w,
-                 tk.PhotoImage(file=PROJECT_DIR + '/icon.py'))
+                 tk.PhotoImage(file=PROJECT_DIR + '/icon.png'))
     menubar = tk.Menu(root)
 
-    if args.open:
-        args.file = filedialog.askopenfilename(
-            initialdir=args.dir,
-            filetypes=[("JSON files", "*.json")])
-
-    app = JSONTreeFrame(root, json_path=args.file, initial_dir=args.dir)
+    if json_file:
+        app = JSONTreeFrame(root, json_path=json_file, initial_dir=initial_dir)
+    elif json_data:
+        app = JSONTreeFrame(root, json_data=json_data)
+    else:
+        app = JSONTreeFrame(root)
 
     file_menu = tk.Menu(menubar, tearoff=0)
     file_menu.add_command(label="Open", accelerator='Ctrl+O',
@@ -292,7 +327,31 @@ def main():
     app.init_search_box()
 
     root.config(menu=menubar)
+    root.bind_all("<Control-o>", lambda e: app.select_json_file(event=e))
+    root.bind_all("<Control-h>",
+                  lambda e: app.select_json_file_from_history(event=e))
+    root.bind_all("<Control-e>", lambda e: app.expand_all(event=e))
+    root.bind_all("<Control-l>", lambda e: app.collapse_all(event=e))
+
     root.mainloop()
+
+
+def main():
+    print(__file__ + " start!!")
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', '--file', type=str, help='JSON file path')
+    parser.add_argument('-d', '--dir', type=str,
+                        help='JSON file directory')
+    parser.add_argument('-o', '--open', action='store_true',
+                        default=False, help='Open with finder')
+    args = parser.parse_args()
+
+    if args.open:
+        args.file = filedialog.askopenfilename(
+            initialdir=args.dir,
+            filetypes=FILETYPES)
+    view_data(json_file=args.file, initial_dir=args.dir)
 
 
 if __name__ == '__main__':

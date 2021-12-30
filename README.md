@@ -3,6 +3,11 @@
 # PyJSONViewer
 A JSON file data viewer using pure python
 
+[![CI](https://github.com/AtsushiSakai/PyJSONViewer/actions/workflows/CI.yml/badge.svg)](https://github.com/AtsushiSakai/PyJSONViewer/actions/workflows/CI.yml)
+[![Downloads](https://pepy.tech/badge/pyjsonviewer)](https://pepy.tech/project/pyjsonviewer)
+[![Downloads](https://pepy.tech/badge/pyjsonviewer/month)](https://pepy.tech/project/pyjsonviewer)
+[![Downloads](https://pepy.tech/badge/pyjsonviewer/week)](https://pepy.tech/project/pyjsonviewer)
+
 # Gallery
 
 - Mac OS
@@ -35,7 +40,7 @@ Features:
 
 # Requirements
 
-- Python 3.6.x or higher
+- Python 3.7 or higher
 
 # Download
 
@@ -46,14 +51,6 @@ or download as zip.
 - [PyJSONViewer · PyPI](https://pypi.org/project/PyJSONViewer/)
 
 # How to use
-
-## Bash alias setting
-
-If you add this alias settting in your .bashrc
-
-> alias pyjsonviewer='python -m pyjsonviewer'
-
-you can use this tool with just typing "pyjsonviewer" in your bash.
 
 ## Select JSON file with CUI.
 
@@ -109,6 +106,25 @@ You can set initial directory:
 
 - Show release note: Help -> Release note
 
+## Inside python code
+
+### View json file
+```
+import pyjsonviewer
+
+pyjsonviewer.view_data(json_file="dat/list.json")
+
+```
+JSON data tree will be shown.
+
+### View json object
+```
+import pyjsonviewer
+json_object = {"a":[1,2,3], "b":"test"}
+pyjsonviewer.view_data(json_data=json_object)
+```
+JSON data tree will be shown.
+
 ## Vimrc setting
 
 If you are a vim user, you can set this command in your vimrc.
@@ -138,7 +154,7 @@ You can also format json file with
 
 >: JSONFormat()
 
-# Open a link with a brower
+# Open a link with a browser
 
 If a URL is included in a json file,
 
